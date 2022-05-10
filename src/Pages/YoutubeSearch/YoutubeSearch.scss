@@ -1,0 +1,64 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.yt-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .yt-search {
+
+        .yt-search-input {
+            height: 21px;
+            font-size: 16px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding: 4px 10px;
+            width: 250px;
+            outline: none;
+        }
+
+        .yt-seeach-btn {
+            background-color: #04AA6D;
+            border: none;
+            color: #fff;
+            padding: 7.5px 16px;
+            border-radius: 2px;
+            font-size: 16px;
+
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+    }
+
+    .yt-result {
+        width: 80%;
+
+        .result-item {
+            display: flex;
+            margin-bottom: 12px;
+
+            .left-section {
+                margin-right: 15px;
+            }
+
+            .right-section {
+
+                .title-video {
+                    margin-bottom: 15px;
+                }
+
+
+                .chanel-title-video {
+                    margin: 10px 0;
+                }
+
+            }
+
+        }
+    }
+}
