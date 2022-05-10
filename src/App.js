@@ -1,26 +1,27 @@
 
-import './App.scss'
-
-import YoutubeSearch from './Pages/YoutubeSearch/YoutubeSearch'
+import { publicRoutes } from "./routes";
 
 import {
   Routes,
   Route,
-  NavLink,
+  BrowserRouter as Router
 } from "react-router-dom";
+
+import './App.scss'
 
 function App() {
 
   return (
-    <div>
-      <div className="topnav">
-        <NavLink activeclassname="active" to="/">Youtube</NavLink>
+    <Router>
+      <div className="App">
+        <Routes>
+          {publicRoutes.map((route, index) => {
+            let Page = route.component;
+            return <Route key={index} path={route.path} element={<Page />} />
+          })}
+        </Routes>
       </div>
-
-      <Routes>
-        <Route path='/' element={<YoutubeSearch />}></Route>
-      </Routes>
-    </div>
+    </Router>
   )
 }
 
