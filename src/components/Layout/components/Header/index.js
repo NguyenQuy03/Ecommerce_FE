@@ -1,20 +1,37 @@
 
 import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
+import styles from './Header.module.scss'
 import Tippy from '@tippyjs/react/headless';
 
 import { ImSpinner2 } from 'react-icons/im';
-import { AiFillCloseCircle, AiOutlinePlus } from 'react-icons/ai';
-import { BsSearch } from 'react-icons/bs';
-
+import { AiFillCloseCircle, AiOutlinePlus, AiOutlineQuestionCircle } from 'react-icons/ai';
+import { BsSearch, BsThreeDotsVertical, BsKeyboard } from 'react-icons/bs';
+import { MdLanguage } from 'react-icons/md';
 
 import { Wrapper as PopperWrapper } from '~/components/Popper';
-import styles from './Header.module.scss'
 import images from '~/assets/images';
 import AccountItem from '~/components/AccountItem';
 import Button from '~/components/Button';
+import Menu from '~/components/Popper/Menu';
 
 const cx = classNames.bind(styles)
+
+const MENU_ITEMS = [
+    {
+        icon: <MdLanguage />,
+        title: 'English'
+    },
+    {
+        icon: <AiOutlineQuestionCircle />,
+        title: 'Feedback and help',
+        to: '/feedback'
+    },
+    {
+        icon: <BsKeyboard />,
+        title: 'Keyboard shortcuts'
+    },
+]
 
 function Header() {
 
@@ -68,6 +85,10 @@ function Header() {
                 <div className={cx('actions')}>
                     <Button outline className={cx('custom-upload')} leftIcon={<AiOutlinePlus />}>Upload</Button>
                     <Button primary >Log in</Button>
+
+                    <Menu items={MENU_ITEMS}>
+                        <button className={cx('more-btn')}><BsThreeDotsVertical /></button>
+                    </Menu>
                 </div>
             </div>
         </header >
