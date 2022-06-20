@@ -4,7 +4,7 @@ import classNames from 'classnames/bind';
 import Tippy from '@tippyjs/react/headless';
 
 import { ImSpinner2 } from 'react-icons/im';
-import { AiFillCloseCircle } from 'react-icons/ai';
+import { AiFillCloseCircle, AiOutlinePlus } from 'react-icons/ai';
 import { BsSearch } from 'react-icons/bs';
 
 
@@ -12,6 +12,7 @@ import { Wrapper as PopperWrapper } from '~/components/Popper';
 import styles from './Header.module.scss'
 import images from '~/assets/images';
 import AccountItem from '~/components/AccountItem';
+import Button from '~/components/Button';
 
 const cx = classNames.bind(styles)
 
@@ -21,7 +22,7 @@ function Header() {
 
     useEffect(() => {
         setTimeout(() => {
-            setSearchResult([9, 2, 4])
+            setSearchResult([])
         }, 1000)
     }, [])
 
@@ -53,9 +54,9 @@ function Header() {
                                 <AiFillCloseCircle />
                             </button>
 
-                            {/* <button className={cx('loading')}>
+                            <button className={cx('loading')}>
                                 <ImSpinner2 />
-                            </button> */}
+                            </button>
 
                             <button className={cx('search-btn')}>
                                 <BsSearch />
@@ -64,7 +65,10 @@ function Header() {
                     </Tippy>
                 </div>
 
-                <div className={cx('actions')}></div>
+                <div className={cx('actions')}>
+                    <Button outline className={cx('custom-upload')} leftIcon={<AiOutlinePlus />}>Upload</Button>
+                    <Button primary >Log in</Button>
+                </div>
             </div>
         </header >
     );

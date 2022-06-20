@@ -1,7 +1,9 @@
 @import 'normalize.css';
 
 :root {
-    --primary-color: rgba(254, 44, 85, 1.0);
+    --primary: rgba(254, 44, 85, 1.0);
+    --white: #fff;
+    --black: #000;
     --text-color: #333;
 
     --default-layout-header-heigh: 60px;
