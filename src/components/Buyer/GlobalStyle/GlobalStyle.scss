@@ -1,0 +1,43 @@
+@import 'normalize.css';
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,600;0,700;1,400&display=swap');
+
+
+:root {
+    --primary: #D19C97;
+    --secondary: #EDF1FF;
+    --white: #fff;
+    --black: #000;
+    --text-color: #333;
+    --text-input: #495057;
+
+    --default-layout-header-heigh: 112px;
+    --default-layout-width: 1280px
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+body {
+    font-size: 1.6rem;
+    line-height: 1.5;
+    font-family: 'Poppins', sans-serif;
+    text-rendering: optimizeSpeed;
+    color: var(--text-color);
+}
+
+input, button, [tabindex] {
+    border: none;
+    outline: none;
+}
+
+a[href] {
+    text-decoration: none;
+    color: var(--text-color);
+}
