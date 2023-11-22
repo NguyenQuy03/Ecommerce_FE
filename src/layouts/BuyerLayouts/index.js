@@ -1,2 +1,2 @@
-export { default as DefaultLayout } from "./DefaultLayout"
-export { default as WithOutSidebarLayout } from "./WithoutSidebarLayout" 
+export { default as LayoutDefault } from "./LayoutDefault/LayoutDefault"
+export { default as LayoutWithoutSlider } from "./LayoutWithoutSlider/LayoutWithoutSlider" 

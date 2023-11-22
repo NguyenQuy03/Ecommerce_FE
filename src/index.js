@@ -2,15 +2,28 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import GlobalStyle from '~/components/Buyer/GlobalStyle'
+
+import GlobalStyle from '~/components/Buyer/GlobalStyle';
+
+import { ConfigProvider } from 'antd';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <GlobalStyle>
-      <App />
-    </GlobalStyle>
+
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: '#D19C97',
+          fontFamily: "Poppins"
+        },
+      }}
+    >
+      <GlobalStyle>
+        <App />
+      </GlobalStyle>
+    </ConfigProvider>
   </React.StrictMode>
 );
 

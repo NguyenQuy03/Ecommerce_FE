@@ -1,6 +1,6 @@
 .wrapper {
-    --heigh-input-search: 42px;
-    --width-input-seach: 560px;
+    --heigh-input-search: 38px;
+    --width-input-seach: 600px;
     --width-input-btn: 50px;
     --border-radius-input: 4px;
 
@@ -90,23 +90,13 @@
 .actions {
     display: flex;
     align-items: center;
-
-    .custom-upload {
-        max-width: 110px;
-        color: var(--black);
-        border-color: rgba(22, 24, 35, 0.12);
-        border-radius: 2px;
-    
-        &:hover {
-            border-color: rgba(22, 24, 35, 0.12);
-            background-color: rgba(22, 24, 35, 0.03);
-        }
-    }
 }
 
-.more-btn {
-    font-size: 2rem;
-    margin-left: 22px;
+.drop-down {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+    font-size: 1.8rem;
     background-color: transparent;
     cursor: pointer;
 }

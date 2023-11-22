@@ -4,7 +4,7 @@ import { Fragment } from "react";
 
 
 import { publicRoutes } from "~/routes/buyer";
-import { DefaultLayout } from "~/layouts/BuyerLayouts"
+import { LayoutDefault } from "~/layouts/BuyerLayouts"
 
 function App() {
 
@@ -13,7 +13,7 @@ function App() {
       <div className="App">
         <Routes>
           {publicRoutes.map((route, index) => {
-            let Layout = DefaultLayout
+            let Layout = LayoutDefault
             if (route.layout) {
               Layout = route.layout
             } else if (route.layout === null) {

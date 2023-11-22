@@ -6,7 +6,7 @@
     --primary: #D19C97;
     --secondary: #EDF1FF;
     --white: #fff;
-    --black: #000;
+    --black: #1c1c1c;
     --text-color: #333;
     --text-input: #495057;
 
@@ -39,5 +39,25 @@ input, button, [tabindex] {
 
 a[href] {
     text-decoration: none;
-    color: var(--text-color);
+
+    &:hover {
+        color: inherit;
+    }
+}
+
+//Fonts emmbeded
+@font-face {
+    font-family: Poppins;
+    src: url('/assets/fonts/Poppins/Poppins-Regular.ttf');
+    font-weight: 400;
+}
+@font-face {
+    font-family: Poppins;
+    src: url('/assets/fonts/Poppins/Poppins-SemiBold.ttf');
+    font-weight: 600;
+}
+@font-face {
+    font-family: Poppins;
+    src: url('/assets/fonts/Poppins/Poppins-Bold.ttf');
+    font-weight: 700;
 }

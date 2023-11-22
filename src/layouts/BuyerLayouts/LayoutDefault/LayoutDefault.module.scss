@@ -6,7 +6,8 @@
     .container {
         width: var(--default-layout-width, 1150px);
         display: flex;
-        
+        flex-direction: column;
+        padding: 30px 0;
     }
     .content {
         flex: 1;

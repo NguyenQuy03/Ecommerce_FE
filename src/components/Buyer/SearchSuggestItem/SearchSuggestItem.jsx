@@ -1,9 +1,9 @@
 import classNames from "classnames/bind";
-import styles from "../SearchItem/SearchItem.module.scss";
+import styles from "../SearchSuggestItem/SearchSuggestItem.module.scss";
 
 const cx = classNames.bind(styles);
 
-function SearchItem() {
+function SearchSuggestItem() {
   return (
     <div className={cx("wrapper")}>
       <p className={cx("name")}>
@@ -13,4 +13,4 @@ function SearchItem() {
   );
 }
 
-export default SearchItem;
+export default SearchSuggestItem;
