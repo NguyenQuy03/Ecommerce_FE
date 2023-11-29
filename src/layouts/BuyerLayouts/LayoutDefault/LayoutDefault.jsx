@@ -1,5 +1,10 @@
 import Layout from 'antd/es/layout/layout';
-import { Carousel, Footer, Header } from '~/components/Buyer/LayoutComponents';
+
+import { Header, Footer } from '~/layouts/BuyerLayouts/LayoutComponents';
+import Carousel from '~/components/Buyer/Carousel';
+import BannerCarousel from '~/components/Buyer/Carousel/BannerCarousel';
+
+import images from '~/assets/images';
 
 import classNames from 'classnames/bind';
 import styles from './LayoutDefault.module.scss';
@@ -10,7 +15,10 @@ function LayoutDefault({ children }) {
         <Layout className={cx('wrapper')}>
             <Header />
             <div className={cx('container')}>
-                <Carousel />
+                <Carousel items={images.banners}>
+                    <BannerCarousel items={images.banners} />
+                </Carousel>
+
                 <div className={cx('content')}>{children}</div>
             </div>
             <Footer />

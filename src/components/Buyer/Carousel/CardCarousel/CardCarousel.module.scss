@@ -1,0 +1,72 @@
+.card-content {
+    position: relative;
+    width: var(--default-layout-width);
+    height: 270px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.card-item {
+    margin: 0 5px;
+    overflow: hidden;
+
+    &:hover {
+        img {
+            transform: scale(1.05);
+        }
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: 0.4s;
+    }
+
+    .content {
+        
+        .header {
+            .header-title {
+                padding: 2px 8px;
+
+                p {
+                    max-width: 150px;
+                    max-height: 100px;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    white-space: break-spaces;
+                }
+            }
+        }
+
+        .body {
+            padding: 8px;
+
+            .main-title {
+                color: var(--primary);
+                font-weight: 600;
+            }
+
+            .sub-title {
+                color: var(--text-input);
+            }
+        }
+    }
+}
+
+.card-control {
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+}
+
+.card-control.prev {
+    left: -2rem;
+}
+
+.card-control.next {
+    right: -2rem;
+}

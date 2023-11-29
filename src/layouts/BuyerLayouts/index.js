@@ -1,2 +1,2 @@
 export { default as LayoutDefault } from "./LayoutDefault/LayoutDefault"
-export { default as LayoutWithoutSlider } from "./LayoutWithoutSlider/LayoutWithoutSlider" 
+export { default as LayoutWithoutBanner } from "./LayoutWithoutBanner/LayoutWithoutBanner" 

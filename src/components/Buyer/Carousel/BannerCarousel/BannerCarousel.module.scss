@@ -1,0 +1,36 @@
+.banner-content {
+    position: relative;
+    max-width: var(--default-layout-width);
+    height: var(--default-carousel-banner-heigh);
+}
+
+.banner-item {
+    img {
+        width: 100%;
+        height: var(--default-carousel-banner-heigh);
+        border-radius: 4px;
+        object-fit: cover;
+    }
+}
+
+.banner-control {
+    position: absolute;
+    top: 50%;
+    z-index: 1;
+
+    color: var(--white);
+    background-color: var(--black);
+    opacity: 0.5;
+
+    &:hover {
+        opacity: 0.3;
+    }
+}
+
+.banner-control.prev {
+    left: 1em;
+}
+
+.banner-control.next {
+    right: 1em;
+}

@@ -38,7 +38,21 @@
     }
 }
 
-// Button type
+.title {
+    display: flex;
+    align-items: center;
+}
+
+// Button types
+.normal {
+    background-color: var(--white);
+    color: var(--text-color);
+    
+    &:hover {
+        opacity: 0.8;
+        border: solid 1px var(--secondary);
+    }
+}
 
 .primary {
     color: var(--white) !important;
@@ -61,29 +75,22 @@
 }
 
 .transparent {
-    color: var(--white);
-    background-color: var(--black);
-    opacity: 0.5;
-
-    &:hover {
-        opacity: 0.3;
-    }
+    color: var(--primary);
+    background-color: transparent;
 }
 
 // Button shapes
 .rounded {
     border-radius: 999px;
-    box-shadow: 0 2px 8px rgb(0 0 0 / 6%);
-    border-color: rgba(22, 24, 35, 0.12);
-    background-color: rgba(255, 255, 255, 1.0);
-
-    &:hover {
-        border-color: rgba(22, 24, 35, 0.2);
-        background-color: rgba(22, 24, 35, 0.03);
-    }
 }
 
-// Button size
+.vertical {
+    min-width: 30px;
+    padding: 12px 4px;
+    box-shadow: 0 1px 12px 0 rgba(0,0,0,.12);
+}
+
+// Button sizes
 .small {
     min-width: 52px;
     padding: 4px 16px;

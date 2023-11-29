@@ -1,17 +1,16 @@
 @import 'normalize.css';
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,600;0,700;1,400&display=swap');
-
 
 :root {
-    --primary: #D19C97;
-    --secondary: #EDF1FF;
+    --primary: #d19c97;
+    --secondary: #edf1ff;
     --white: #fff;
     --black: #1c1c1c;
     --text-color: #333;
     --text-input: #495057;
 
     --default-layout-header-heigh: 112px;
-    --default-layout-width: 1280px
+    --default-carousel-banner-heigh: 410px;
+    --default-layout-width: 1280px;
 }
 
 * {
@@ -32,12 +31,15 @@ body {
     color: var(--text-color);
 }
 
-input, button, [tabindex] {
+input,
+button,
+[tabindex] {
     border: none;
     outline: none;
 }
 
 a[href] {
+    color: var(--text-color);
     text-decoration: none;
 
     &:hover {

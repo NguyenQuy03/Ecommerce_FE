@@ -1,63 +1,66 @@
+import { Link } from 'react-router-dom';
 
-import { Link } from "react-router-dom";
-
-import classNames from "classnames/bind";
+import classNames from 'classnames/bind';
 import styles from '../Button/Button.module.scss';
 
-const cx = classNames.bind(styles)
+const cx = classNames.bind(styles);
 
 function Button({
     to,
     href,
-    primary = false,
-    outline = false,
-    transparent = false,
+    type,
+    size,
+    shape,
     disabled = false,
-    rounded = false,
-    small = false,
-    large = false,
     children,
     leftIcon,
     rightIcon,
     className,
     onClick,
-    ...passProps 
+    ...passProps
 }) {
-
-    let Comp = "button"
+    let Comp = 'button';
+    const sizes = ['normal', 'small', 'large'];
+    const types = ['normal', 'primary', 'outline', 'transparent'];
+    const shapes = ['normal', 'rounded', 'vertical'];
 
     const props = {
         onClick,
         ...passProps,
-    }
+    };
 
     // Remove event listener when btn disabled
     if (disabled) {
         Object.keys(props).forEach((key) => {
             if (key.startsWith('on')) {
-                delete props[key]
+                delete props[key];
             }
-        })
+        });
     }
 
     if (to) {
         props.to = to;
-        Comp = Link
+        Comp = Link;
     } else if (href) {
         props.href = href;
-        Comp = "a"
+        Comp = 'a';
+    }
+
+    if (!size || !sizes.includes(size)) {
+        size = 'normal';
+    }
+
+    if (!type || !types.includes(type)) {
+        type = 'primary';
     }
 
     const classes = cx('wrapper', {
         [className]: className,
-        primary,
-        outline,
         disabled,
-        transparent,
-        rounded,
-        small,
-        large,
-    })
+        [size]: size,
+        [type]: type,
+        [shape]: shape,
+    });
 
     return (
         <Comp className={cx(classes)} {...props}>
