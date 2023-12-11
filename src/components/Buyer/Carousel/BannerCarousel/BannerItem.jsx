@@ -3,9 +3,10 @@ import styles from './BannerCarousel.module.scss';
 const cx = classNames.bind(styles);
 
 function BannerItem({ data }) {
+
     return (
         <div className={cx('banner-item')}>
-            <img src={data} alt="Banner"/>
+            <img src={data} alt="Banner" />
         </div>
     );
 }

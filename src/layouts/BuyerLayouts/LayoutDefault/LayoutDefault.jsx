@@ -11,6 +11,7 @@ import styles from './LayoutDefault.module.scss';
 const cx = classNames.bind(styles);
 
 function LayoutDefault({ children }) {
+
     return (
         <Layout className={cx('wrapper')}>
             <Header />

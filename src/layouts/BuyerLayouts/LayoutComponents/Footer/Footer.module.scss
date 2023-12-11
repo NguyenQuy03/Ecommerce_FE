@@ -2,4 +2,39 @@
 .wrapper {
     background-color: var(--secondary);
     width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.content {
+    width: var(--default-layout-width);
+    .list-header {
+        border: none;
+    }
+
+    .list-item {
+        border: none;
+        display: flex;
+        justify-content: flex-start;
+
+        svg {
+            margin-right: 1rem;
+        }
+
+        &:first-child {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        &:not(:first-child) {
+            &:hover {
+                color: var(--primary);
+                cursor: pointer;
+            }
+        }
+    }
+
+    .copyright-title {
+        padding: 0 16px;
+    }
 }

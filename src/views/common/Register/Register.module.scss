@@ -1,0 +1,45 @@
+.content {
+    height: 100%;
+    width: 400px;
+}
+
+.header {
+    .title {
+        font-size: 2.4rem;
+        font-weight: 500;
+    }
+
+    .sub-title {
+        font-size: 1.4rem;
+    }
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin-top: 16px;
+
+    .field {
+        height: 34px;
+
+        &:focus-within, &:focus {
+            border-color: green ;
+        }
+    }
+
+    .submit-btn {
+        padding: 10px 16px;
+    }
+}
+
+.footer {
+    width: 100%;
+    font-size: 1.4rem;
+
+    .redirect-btn {
+        color: var(--primary);
+        margin-left: 4px;
+    }
+}

@@ -1,16 +1,25 @@
 import { Carousel as AntCarousel } from 'antd';
-import { useRef, useState, useEffect } from 'react';
-import CardItem from './CardItem';
+import { useEffect, useRef, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 
 import Button from '~/components/Buyer/Button';
+import CardProductItem from './CardProductItem';
 
 import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
 
 import classNames from 'classnames/bind';
 import styles from './CardCarousel.module.scss';
+import CardCategoryItem from './CardCategoryItem';
 const cx = classNames.bind(styles);
 
-function CardCarousel({ items = [], showControls = true, showIndicators = true, slidesToShow = 6 }) {
+function CardCarousel({
+    items = [],
+    type = 'product',
+    showControls = true,
+    showIndicators = true,
+    autoplay = true,
+    slidesToShow = 6,
+}) {
     const carouselContent = useRef(null);
     const carouselSlider = useRef(null);
 
@@ -22,8 +31,18 @@ function CardCarousel({ items = [], showControls = true, showIndicators = true, 
         carouselSlider.current.prev();
     };
 
+    while(items.length < slidesToShow) {
+        items.push({})
+    }
+
     const renderItems = () => {
-        return items.map((item, index) => <CardItem key={index} data={item} />);
+        let ItemComponent = CardProductItem;
+        if(type == 'category') {
+            ItemComponent = CardCategoryItem;
+        }
+        return items.map((item, index) => {
+            return <ItemComponent key={index} data={item} />;
+        });
     };
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -44,9 +63,31 @@ function CardCarousel({ items = [], showControls = true, showIndicators = true, 
 
     useEffect(() => {
         if (carouselContent.current && windowWidth < 1280) {
-            carouselContent.current.style.width = `${windowWidth}px`;
+            carouselContent.current.style.width = `${windowWidth - 40}px`;
         }
     }, [windowWidth]);
+
+    const isMobile = useMediaQuery({ maxWidth: 767 });
+    const isTablet = useMediaQuery({ minWidth: 768, maxWidth: 1023 });
+    const isDesktop = useMediaQuery({ minWidth: 1024 });
+
+    const getSlidesToShow = () => {
+        if (isMobile) {
+            return 2;
+        } else if (isTablet) {
+            return 4;
+        } else if(isDesktop) {
+            return 6;
+        }
+    };
+
+    if(!slidesToShow) {
+        slidesToShow = getSlidesToShow();
+    }
+
+    if(showControls) {
+        showControls = items.length > slidesToShow;
+    }
 
     return (
         <div className={cx('card-content')} ref={carouselContent}>
@@ -58,7 +99,7 @@ function CardCarousel({ items = [], showControls = true, showIndicators = true, 
             <AntCarousel
                 ref={carouselSlider}
                 slidesToShow={slidesToShow}
-                autoplay={false}
+                autoplay={autoplay}
                 autoplaySpeed={5000}
                 speed={500}
                 dots={showIndicators}

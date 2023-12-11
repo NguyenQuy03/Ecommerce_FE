@@ -114,14 +114,21 @@
 }
 
 .drop-down {
+    min-width: 175px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+
     .full-name {
         display: block;
         white-space: nowrap;
         text-overflow: ellipsis;
-        font-size: 1.8rem;
         border: none;
         max-width: var(--max-width-fullname);
         overflow: hidden;
         margin-right: 2px;
     }
+
 }

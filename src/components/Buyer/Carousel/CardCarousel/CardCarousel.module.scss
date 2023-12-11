@@ -3,7 +3,7 @@
     width: var(--default-layout-width);
     height: 270px;
     border-radius: 4px;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
 }
 
 .card-item {
@@ -27,10 +27,11 @@
         
         .header {
             .header-title {
+                min-height: 50px;
                 padding: 2px 8px;
 
                 p {
-                    max-width: 150px;
+                    max-width: 160px;
                     max-height: 100px;
                     display: -webkit-box;
                     -webkit-line-clamp: 2;
@@ -47,11 +48,12 @@
 
             .main-title {
                 color: var(--primary);
-                font-weight: 600;
+                font-weight: 500;
             }
 
             .sub-title {
                 color: var(--text-input);
+                font-size: 1.3rem;
             }
         }
     }
