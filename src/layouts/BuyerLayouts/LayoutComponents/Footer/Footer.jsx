@@ -1,7 +1,7 @@
-import { Footer as AntdFooter } from 'antd/es/layout/layout';
 import { Link } from 'react-router-dom';
+import { Footer as AntFooter } from 'antd/es/layout/layout';
 
-import { Col, Divider, List, Row, Avatar } from 'antd';
+import { Col, Divider, List, Row } from 'antd';
 import classNames from 'classnames/bind';
 import styles from '../Footer/Footer.module.scss';
 import { Facebook, Instagram, Linkedin } from 'react-bootstrap-icons';
@@ -33,7 +33,7 @@ const followData = [
 
 function Footer() {
     return (
-        <AntdFooter className={cx('wrapper')}>
+        <AntFooter className={cx('wrapper')} >
             <div className={cx('content')}>
                 <div>
                     <Row
@@ -87,14 +87,14 @@ function Footer() {
                 <Divider orientation="center"></Divider>
 
                 <Row>
-                    <div>
+                    <Col span={24}>
                         <p className={cx('copyright-title')}>
                             &copy; <Link to="/">ZECO</Link>. All Rights Reserved
                         </p>
-                    </div>
+                    </Col>
                 </Row>
             </div>
-        </AntdFooter>
+        </AntFooter>
     );
 }
 

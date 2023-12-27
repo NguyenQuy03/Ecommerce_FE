@@ -23,10 +23,6 @@
 
     .field {
         height: 34px;
-
-        &:focus-within, &:focus {
-            border-color: green ;
-        }
     }
 
     .submit-btn {

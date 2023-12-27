@@ -1,12 +1,13 @@
-import TitleSection from '~/components/Buyer/TitleSection';
-
 import { useEffect, useState } from 'react';
 import Button from '~/components/Buyer/Button';
 import Carousel from '~/components/Buyer/Carousel';
 import CardCarousel from '~/components/Buyer/Carousel/CardCarousel';
+import { WrapperComponent } from '~/components/Buyer/Wrapper';
 
-import { getProducts } from '~/services/ProductService';
+import TitleSection from '~/components/Buyer/TitleSection';
+
 import { getCategories } from '~/services/CategoryService';
+import { getProducts } from '~/services/ProductService';
 
 import classNames from 'classnames/bind';
 import styles from './Home.module.scss';
@@ -15,21 +16,19 @@ const cx = classNames.bind(styles);
 function Home() {
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
-    
+
     useEffect(() => {
         getProducts()
             .then((response) => {
-                setProducts(response.data)
+                setProducts(response);
             })
             .catch((error) => console.error('Error fetching data:', error));
-
     }, []);
 
-    
     useEffect(() => {
         getCategories()
             .then((response) => {
-                setCategories(response.data)
+                setCategories(response);
             })
             .catch((error) => console.error('Error fetching data:', error));
     }, []);
@@ -38,14 +37,28 @@ function Home() {
         <div className={cx('home')}>
             <TitleSection>Categories</TitleSection>
 
-            <Carousel>
-                <CardCarousel type='category' items={categories} showIndicators={false}/>
-            </Carousel>
+            {categories?.length > 0 && (
+                <WrapperComponent>
+                    <Carousel>
+                        <CardCarousel type="category" items={categories} showIndicators={false} autoplay={false} />
+                    </Carousel>
+                </WrapperComponent>
+            )}
 
             <TitleSection>Trendy Products</TitleSection>
-            <Carousel>
-                <CardCarousel items={products} showIndicators={false} showControls={false}/>
-            </Carousel>
+
+            {products?.length > 0 && (
+                <WrapperComponent>
+                    <CardCarousel
+                        type="product"
+                        items={products}
+                        showIndicators={false}
+                        showControls={false}
+                        autoplay={false}
+                    />
+                </WrapperComponent>
+            )}
+
             <div className={cx('see-more-btn')}>
                 <Button type={'outline'} size={'large'}>
                     See More

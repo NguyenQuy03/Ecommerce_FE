@@ -1,10 +1,10 @@
-import { useRef, useState, useEffect } from 'react';
-import { Carousel as AntCarousel } from 'antd';
-import BannerItem from './BannerItem';
+import { Carousel as AntCarousel, Row, Col } from 'antd';
+import PropTypes from 'prop-types';
+import { useRef } from 'react';
+import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
 
 import Button from '~/components/Buyer/Button';
-
-import { ArrowLeft, ArrowRight } from 'react-bootstrap-icons';
+import BannerItem from './BannerItem';
 
 import classNames from 'classnames/bind';
 import styles from './BannerCarousel.module.scss';
@@ -25,62 +25,49 @@ function BannerCarousel({ items = [], showControls = true, showIndicators = true
         return items.map((item, index) => <BannerItem key={index} data={item} />);
     };
 
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-
-    useEffect(() => {
-        setWindowWidth(window.innerWidth);
-
-        const handleResize = () => {
-            setWindowWidth(window.innerWidth);
-        };
-
-        window.addEventListener('resize', handleResize);
-
-        return () => {
-            window.removeEventListener('resize', handleResize);
-        };
-    }, []);
-
-    useEffect(() => {
-        if (carouselContent.current && windowWidth < 1280) {
-            carouselContent.current.style.width = `${windowWidth}px`;
-        }
-    }, [windowWidth]);
-
     return (
-        <div className={cx('banner-content')} ref={carouselContent}>
-            {showControls && (
-                <Button
-                    onClick={prevSlide}
-                    type={'transparent'}
-                    size={'small'}
-                    className={cx('banner-control', 'prev')}
+        <Row className={cx('content')} ref={carouselContent}>
+            <Col span={24}>
+                {showControls && (
+                    <Button
+                        onClick={prevSlide}
+                        type={'transparent'}
+                        size={'small'}
+                        className={cx('control', 'prev')}
+                    >
+                        <ArrowLeft />
+                    </Button>
+                )}
+                <AntCarousel
+                    ref={carouselSlider}
+                    slidesToShow={slidesToShow}
+                    autoplay={false}
+                    autoplaySpeed={5000}
+                    speed={500}
+                    dots={showIndicators}
                 >
-                    <ArrowLeft />
-                </Button>
-            )}
-            <AntCarousel
-                ref={carouselSlider}
-                slidesToShow={slidesToShow}
-                autoplay={false}
-                autoplaySpeed={5000}
-                speed={500}
-                dots={showIndicators}
-            >
-                {renderItems()}
-            </AntCarousel>
-            {showControls && (
-                <Button
-                    onClick={nextSlide}
-                    type={'transparent'}
-                    size={'small'}
-                    className={cx('banner-control', 'next')}
-                >
-                    <ArrowRight />
-                </Button>
-            )}
-        </div>
+                    {renderItems()}
+                </AntCarousel>
+                {showControls && (
+                    <Button
+                        onClick={nextSlide}
+                        type={'transparent'}
+                        size={'small'}
+                        className={cx('control', 'next')}
+                    >
+                        <ArrowRight />
+                    </Button>
+                )}
+            </Col>
+        </Row>
     );
 }
+
+BannerCarousel.propTypes = {
+    items: PropTypes.array,
+    showControls: PropTypes.bool,
+    showIndicators: PropTypes.bool,
+    slidesToShow: PropTypes.number,
+};
 
 export default BannerCarousel;

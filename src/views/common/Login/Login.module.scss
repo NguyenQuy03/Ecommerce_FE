@@ -24,10 +24,6 @@
 
     .field {
         height: 34px;
-
-        &:focus-within, &:focus {
-            border-color: green;
-        }
     }
 
     .submit-btn {
@@ -45,9 +41,17 @@
     }
 }
 
-.noti-success{
+.noti {
     width: 440px !important;
     border-radius: 4px;
+}
+
+.success {
     border: solid 1px #b7eb8f;
-    background: #f6ffed,
+    background-color: #f6ffed,
+}
+
+.error {
+    border: solid 1px #FFCCC7;
+    background-color: #FFF2F0;
 }

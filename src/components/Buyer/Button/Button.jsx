@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
 
+import PropTypes from 'prop-types';
+
 import classNames from 'classnames/bind';
 import styles from '../Button/Button.module.scss';
 
@@ -20,9 +22,6 @@ function Button({
     ...passProps
 }) {
     let Comp = 'button';
-    const sizes = ['normal', 'small', 'large'];
-    const types = ['normal', 'primary', 'outline', 'transparent'];
-    const shapes = ['normal', 'rounded', 'vertical'];
 
     const props = {
         onClick,
@@ -46,14 +45,6 @@ function Button({
         Comp = 'a';
     }
 
-    if (!size || !sizes.includes(size)) {
-        size = 'normal';
-    }
-
-    if (!type || !types.includes(type)) {
-        type = 'primary';
-    }
-
     const classes = cx('wrapper', {
         [className]: className,
         disabled,
@@ -70,5 +61,19 @@ function Button({
         </Comp>
     );
 }
+
+Button.propTypes = {
+    to: PropTypes.string,
+    href: PropTypes.string,
+    type: PropTypes.oneOf(['normal', 'primary', 'outline', 'transparent']),
+    size: PropTypes.oneOf(['normal', 'small', 'large']),
+    shape: PropTypes.oneOf(['normal', 'rounded', 'vertical']),
+    disabled: PropTypes.bool,
+    children: PropTypes.node.isRequired,
+    leftIcon: PropTypes.node,
+    rightIcon: PropTypes.node,
+    className: PropTypes.string,
+    onClick: PropTypes.func,
+};
 
 export default Button;

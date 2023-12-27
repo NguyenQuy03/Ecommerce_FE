@@ -1,9 +1,9 @@
 
 import logo from '~/assets/images/logo.svg';
+import banner1 from '~/assets/images/banners/banner1.png'
+import banner2 from '~/assets/images/banners/banner2.png'
+import banner3 from '~/assets/images/banners/banner3.png'
 
-const banner1 = 'https://res.cloudinary.com/dald4jiyw/image/upload/v1700746125/Carousel/banner3_dxxang.png';
-const banner2 =  'https://res.cloudinary.com/dald4jiyw/image/upload/v1700746125/Carousel/banner2_k7m5x5.png';
-const banner3 =  'https://res.cloudinary.com/dald4jiyw/image/upload/v1700746125/Carousel/banner1_r92a1p.png';
 
 const images = {
     logo,

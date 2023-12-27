@@ -1,19 +1,17 @@
-.banner-content {
+.content {
+    width: 100%;
     position: relative;
-    max-width: var(--default-layout-width);
     height: var(--default-carousel-banner-heigh);
 }
 
-.banner-item {
-    img {
-        width: 100%;
-        height: var(--default-carousel-banner-heigh);
-        border-radius: 4px;
-        object-fit: cover;
-    }
+img {
+    width: 100%;
+    height: var(--default-carousel-banner-heigh);
+    border-radius: 4px;
+    object-fit: cover;
 }
 
-.banner-control {
+.control {
     position: absolute;
     top: 50%;
     z-index: 1;
@@ -27,10 +25,10 @@
     }
 }
 
-.banner-control.prev {
-    left: 1em;
+.control.prev {
+    left: 0.5em;
 }
 
-.banner-control.next {
-    right: 1em;
+.control.next {
+    right: 0.5em;
 }

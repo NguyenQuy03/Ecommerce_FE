@@ -1,0 +1,64 @@
+.content {
+    width: 100%;
+    flex-direction: row;
+
+    .carousel {
+        img {
+            height: 460px;
+        }
+    }
+
+    .basic-info {
+        color: var(--text-color);
+
+        h1 {
+            font-weight: 500;
+        }
+
+        span {
+            font-size: 1.5rem;
+        }
+
+        .title {
+            display: block;
+            min-width: 10rem;
+            font-size: 1.7rem;
+        }
+
+        .rate {
+            color: var(--primary);
+        }
+
+        .price {
+            color: var(--primary);
+        }
+
+        .variation-content {
+            max-width: 300px;
+        }
+    }
+
+    .shop-container {
+        background-color: var(--secondary);
+        width: 100%;
+        padding: 10px 20px;
+        min-height: 160px;
+
+        img {
+            width: 100px;
+        }
+
+        button {
+            font-size: 1.2rem;
+
+            svg {
+                width: 1.6rem;
+                height: 1.6rem;
+            }
+        }
+
+        .shop-info-value {
+            color: var(--primary);
+        }
+    }
+}

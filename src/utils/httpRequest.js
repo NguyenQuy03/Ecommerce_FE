@@ -1,8 +1,19 @@
 import axios from 'axios';
 
 const httpRequest = axios.create({
-    baseURL: process.env.REACT_APP_BASE_URL,
+    baseURL: process.env.REACT_APP_BASE_URL
 });
+
+// httpRequest.interceptors.response.use(function (response) {
+//     // Optional: Do something with response data
+//     return response;
+// }, function (error) {
+//     // Do whatever you want with the response error here:
+
+//     // But, be SURE to return the rejected promise, so the caller still has 
+//     // the option of additional specialized handling at the call-site:
+//     return Promise.reject(error);
+// });
 
 export const get = async (path, options = {}) => {
     const response = await httpRequest.get(path, options);
@@ -10,14 +21,8 @@ export const get = async (path, options = {}) => {
 };
 
 export const post = async (path, data = {}, options = {}) => {
-    try {
-        const response = httpRequest.post(path, data, options)
-        return response;
-    } catch (error) {
-        // console.error(`POST request to ${path} failed:`, error);
-        // throw error; // rethrow the error so that it can be caught by the calling function
-        return error;
-    }
+    const response = httpRequest.post(path, data, options)
+    return response;
 };
 
 export default httpRequest;

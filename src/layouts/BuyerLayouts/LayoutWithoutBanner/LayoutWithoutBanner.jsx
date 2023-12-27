@@ -1,14 +1,20 @@
+import Layout from 'antd/es/layout/layout';
 import { Header, Footer } from '~/layouts/BuyerLayouts/LayoutComponents';
+import { Row, Col } from 'antd';
 
 function LayoutWithoutSlider({ children }) {
     return (
-        <div>
+        <Layout>
             <Header />
-            <div className="container">
-                <div className="content">{children}</div>
-            </div>
+            <Row align={'middle'}>
+                <Col span={24}>
+                    <Row align={'middle'} justify={'center'}>
+                        {children}
+                    </Row>
+                </Col>
+            </Row>
             <Footer />
-        </div>
+        </Layout>
     );
 }
 

@@ -1,5 +1,7 @@
 import { Card, Flex } from 'antd';
 
+import PropTypes from 'prop-types';
+
 import classNames from 'classnames/bind';
 import styles from './CardCarousel.module.scss';
 const cx = classNames.bind(styles);
@@ -32,9 +34,9 @@ function CardCategoryItem({ data }) {
                 bodyStyle={{ padding: '4px' }}
             >
                 <Flex className={cx('content')} vertical justify="space-between">
-                    <Flex className={cx('header')} justify='center'>
+                    <Flex className={cx('header')} justify="center">
                         <div className={cx('header-title')}>
-                            <p>{data.code}</p>
+                            <p>{data.name}</p>
                         </div>
                     </Flex>
                 </Flex>
@@ -42,5 +44,11 @@ function CardCategoryItem({ data }) {
         );
     }
 }
+
+CardCategoryItem.propTypes = {
+    data: PropTypes.shape({
+        code: PropTypes.string,
+    }).isRequired,
+};
 
 export default CardCategoryItem;

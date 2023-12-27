@@ -1,15 +1,12 @@
 
-
-//Layout
-import { LayoutBlank } from "~/layouts/CommonLayouts/";
-
 //Pages
-import { Login, Register } from "~/views/common";
+import { Login, Missing, Register } from "~/views/common";
 
 //Path
 const publicRoutes = [
-    { path: '/login', component: Login, layout: LayoutBlank },
-    { path: '/register', component: Register, layout: LayoutBlank },
+    { path: '/login', component: Login },
+    { path: '/register', component: Register },
+    { path: '/*', component: Missing, layout: null },
 ]
 
 const privateRoutes = [

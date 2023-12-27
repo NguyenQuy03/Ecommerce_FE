@@ -1,15 +1,15 @@
 import { Carousel as AntCarousel } from 'antd';
+import PropTypes from 'prop-types';
 import { useEffect, useRef, useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
 import { useMediaQuery } from 'react-responsive';
 
 import Button from '~/components/Buyer/Button';
+import CardCategoryItem from './CardCategoryItem';
 import CardProductItem from './CardProductItem';
-
-import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
 
 import classNames from 'classnames/bind';
 import styles from './CardCarousel.module.scss';
-import CardCategoryItem from './CardCategoryItem';
 const cx = classNames.bind(styles);
 
 function CardCarousel({
@@ -31,18 +31,20 @@ function CardCarousel({
         carouselSlider.current.prev();
     };
 
-    while(items.length < slidesToShow) {
-        items.push({})
+    while (items?.length < slidesToShow) {
+        items.push({});
     }
 
     const renderItems = () => {
         let ItemComponent = CardProductItem;
-        if(type == 'category') {
+        if (type === 'category') {
             ItemComponent = CardCategoryItem;
         }
-        return items.map((item, index) => {
-            return <ItemComponent key={index} data={item} />;
-        });
+        if(items?.length > 0) {
+            return items.map((item, index) => {
+                return <ItemComponent key={index} data={item} />;
+            });
+        }
     };
 
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -76,17 +78,17 @@ function CardCarousel({
             return 2;
         } else if (isTablet) {
             return 4;
-        } else if(isDesktop) {
+        } else if (isDesktop) {
             return 6;
         }
     };
 
-    if(!slidesToShow) {
+    if (!slidesToShow) {
         slidesToShow = getSlidesToShow();
     }
 
-    if(showControls) {
-        showControls = items.length > slidesToShow;
+    if (showControls) {
+        showControls = items?.length > slidesToShow;
     }
 
     return (
@@ -100,7 +102,7 @@ function CardCarousel({
                 ref={carouselSlider}
                 slidesToShow={slidesToShow}
                 autoplay={autoplay}
-                autoplaySpeed={5000}
+                autoplaySpeed={3000}
                 speed={500}
                 dots={showIndicators}
             >
@@ -114,5 +116,14 @@ function CardCarousel({
         </div>
     );
 }
+
+CardCarousel.propTypes = {
+    items: PropTypes.array,
+    type: PropTypes.oneOf(['category', 'product']),
+    autoplay: PropTypes.bool,
+    showControls: PropTypes.bool,
+    showIndicators: PropTypes.bool,
+    slidesToShow: PropTypes.number,
+};
 
 export default CardCarousel;

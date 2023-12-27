@@ -8,8 +8,8 @@ export const getCategories = async () => {
         'Content-Type': 'application/json',
       },
     });
-    return res;
+    return res.data;
   } catch (error) {
-    console.log(error);
+    throw new Error('Failed to fetch categories');
   }
 };

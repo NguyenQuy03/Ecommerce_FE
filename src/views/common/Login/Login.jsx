@@ -1,17 +1,17 @@
-import { useEffect } from 'react';
+import { Flex, Form, Input, notification } from 'antd';
+import Cookies from 'js-cookie';
+import { useEffect, useRef, useState, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import { Flex, Form, Input, notification } from 'antd';
-
 import Button from '~/components/Buyer/Button';
-
 import { login } from '~/services/AuthService';
+import { useAuth } from '~/hooks';
 
 import classNames from 'classnames/bind';
 import styles from './Login.module.scss';
 const cx = classNames.bind(styles);
 
-const layout = {
+const formLayout = {
     labelCol: { span: 8 },
     wrapperCol: { span: 24 },
 };
@@ -22,42 +22,50 @@ const tailLayout = {
 const maxLengthInput = 40;
 
 const Login = () => {
+    // const { setAuth } = useAuth();
+
     const navigate = useNavigate();
-
     const location = useLocation();
-    const respMessage = location.state && location.state.message;
-    const respStatus = location.state && location.state.status === 200 ? 'success' : 'error';
-
     const [api, contextHolder] = notification.useNotification();
-    const openNotification = (placement, status, message) => {
+    const usernameRef = useRef();
+
+    const from = location.state?.from?.pathname || '/';
+
+    const [respData, setRespData] = useState(location.state || { message: '', status: 'success' });
+
+    const openNotification = useCallback((placement, status, message) => {
         api[status]({
             message: message,
             placement: placement,
-            className: cx(`noti-${status}`),
+            className: cx('noti', `${status}`),
             closeIcon: false,
             duration: 3.5,
         });
-    };
+    }, [api]);
 
     useEffect(() => {
-        if (respMessage) {
-            openNotification('topRight', respStatus, respMessage);
-        }
-    }, [respMessage]);
+        openNotification('topRight', respData?.status, respData?.message);
+    }, [respData, openNotification]);
+
+    useEffect(() => {
+        usernameRef.current.focus();
+    }, []);
 
     const onFinish = (formData) => {
-        console.log('Success:', formData);
         login(formData)
             .then((response) => {
-                navigate('/', { state: { message: response.data, status: response.status } });
+                const accessToken = response?.data?.accessToken;
+                const roles = response?.data?.roles;
+                // setAuth({ roles, accessToken });
+
+                Cookies.set('access_token', accessToken, { expires: 1 / 24 / 10 });
+                navigate(from, {
+                    state: { message: response?.data, status: response?.status === 200 ? 'success' : 'error' },
+                });
             })
             .catch((error) => {
-                console.error('Error registering user:', error);
+                setRespData({ message: error.response.data, status: 'error' });
             });
-    };
-
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
     };
 
     return (
@@ -71,20 +79,19 @@ const Login = () => {
 
             <Form
                 className={cx('body')}
-                {...layout}
+                {...formLayout}
                 name="basic"
                 initialValues={{ remember: true }}
                 autoComplete="off"
                 layout="vertical"
                 onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
             >
                 <Form.Item
                     label="Username"
                     name="username"
                     rules={[{ required: true, message: 'Please input your username!' }]}
                 >
-                    <Input className={cx('field')} maxLength={maxLengthInput} />
+                    <Input ref={usernameRef} className={cx('field')} maxLength={maxLengthInput} />
                 </Form.Item>
 
                 <Form.Item
