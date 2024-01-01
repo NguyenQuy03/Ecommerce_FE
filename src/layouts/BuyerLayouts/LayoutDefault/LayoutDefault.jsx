@@ -1,9 +1,8 @@
-import { Col, Row } from 'antd';
+import { Col, FloatButton, Row } from 'antd';
 import Layout from 'antd/es/layout/layout';
 
-import Carousel from '~/components/Buyer/Carousel';
+import { BannerItem, Carousel } from '~/components/Buyer/Carousel';
 import { WrapperComponent } from '~/components/Buyer/Wrapper';
-import BannerCarousel from '~/components/Buyer/Carousel/BannerCarousel';
 import { Footer, Header } from '~/layouts/BuyerLayouts/LayoutComponents';
 
 import images from '~/assets/images';
@@ -20,9 +19,14 @@ function LayoutDefault({ children }) {
                 <Col span={24}>
                     <Row justify={'center'}>
                         <WrapperComponent>
-                            <Carousel items={images.banners}>
-                                <BannerCarousel items={images.banners} />
-                            </Carousel>
+                            <Carousel
+                                items={images.banners}
+                                element={<BannerItem />}
+                                showIndicators
+                                autoplay
+                                slidesToShow={1}
+                                controlType={'banner'}
+                            />
                         </WrapperComponent>
                     </Row>
                 </Col>
@@ -33,6 +37,7 @@ function LayoutDefault({ children }) {
                 </Col>
             </Row>
             <Footer />
+            <FloatButton.BackTop duration={600} visibilityHeight={600} />
         </Layout>
     );
 }

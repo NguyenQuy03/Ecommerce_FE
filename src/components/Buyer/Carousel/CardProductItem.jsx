@@ -1,11 +1,12 @@
-import { Card, Flex } from 'antd';
+import { Card, Flex, Typography } from 'antd';
 import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
 
 import classNames from 'classnames/bind';
-import styles from './CardCarousel.module.scss';
+import styles from './Carousel.module.scss';
 const cx = classNames.bind(styles);
+const { Paragraph } = Typography;
 
 function CardProductItem({ data }) {
     function isEmpty() {
@@ -36,13 +37,20 @@ function CardProductItem({ data }) {
                     <Flex className={cx('content')} vertical justify="space-between">
                         <div className={cx('header')}>
                             <div className={cx('header-title')}>
-                                <p>{data.name}</p>
+                                <Paragraph
+                                    ellipsis={{
+                                        rows: 2,
+                                    }}
+                                    style={{ marginBottom: 0 }}
+                                >
+                                    {data.name}
+                                </Paragraph>
                             </div>
                         </div>
                         <Flex className={cx('body')} vertical justify="space-between">
                             <Flex justify="space-between">
-                                <p className={cx('main-title')}>{data.avgPrice}</p>
-                                <p className={cx('sub-title')}>{data.totalSold}</p>
+                                <p className={cx('main-title')}>{data.additionalInfo.avgPrice}</p>
+                                <p className={cx('sub-title')}>{data.additionalInfo.totalSold}</p>
                             </Flex>
                         </Flex>
                     </Flex>
@@ -56,8 +64,10 @@ CardProductItem.propTypes = {
     data: PropTypes.shape({
         name: PropTypes.string.isRequired,
         image: PropTypes.string.isRequired,
-        avgPrice: PropTypes.string.isRequired,
-        totalSold: PropTypes.number.isRequired,
+        additionalInfo: PropTypes.shape({
+            avgPrice: PropTypes.string.isRequired,
+            totalSold: PropTypes.number.isRequired,
+        }),
     }),
 };
 

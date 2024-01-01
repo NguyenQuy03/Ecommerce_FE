@@ -1,0 +1,73 @@
+.content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+}
+
+.card-item {
+    margin: 0 5px;
+    overflow: hidden;
+
+    &:hover {
+        img {
+            transform: scale(1.05);
+        }
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: 0.4s;
+    }
+
+    .content {
+        padding: 2px 6px;
+        
+        .header {
+            .header-title {
+                min-height: 44px;
+            }
+        }
+
+        .body {
+            margin-top: 8px;
+            .main-title {
+                color: var(--primary);
+                font-weight: 500;
+            }
+
+            .sub-title {
+                color: var(--text-input);
+                font-size: 1.3rem;
+            }
+        }
+    }
+}
+
+.banner-img {
+    width: 100%;
+}
+
+.control {
+    position: absolute;
+    top: 45%;
+    z-index: 1;
+}
+
+.card-control.prev {
+    left: -1.5rem;
+}
+
+.card-control.next {
+    right: -1.5rem;
+}
+
+.banner-control.prev {
+    left: 0.5rem;
+}
+
+.banner-control.next {
+    right: 0.5rem;
+}

@@ -1,9 +1,11 @@
 
 import * as httpRequest from '~/utils/httpRequest';
 
+const CATEGORY_URL = '/v1/buyer/category';
+
 export const getCategories = async () => {
   try {
-    const res = await httpRequest.get('/v1/buyer/category', {
+    const res = await httpRequest.get(CATEGORY_URL, {
       headers: {
         'Content-Type': 'application/json',
       },

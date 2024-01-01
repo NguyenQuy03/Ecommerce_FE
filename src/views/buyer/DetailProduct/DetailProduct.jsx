@@ -1,67 +1,81 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Col, InputNumber, Radio, Row, Space, Divider, Tabs } from 'antd';
-import { CartPlus, Star, StarFill, StarHalf, ChatSquareText, ShopWindow } from 'react-bootstrap-icons';
+import { Col, Divider, InputNumber, Radio, Rate, Row, Space } from 'antd';
+import { CartPlus, ChatSquareText, ShopWindow } from 'react-bootstrap-icons';
 
-import { getProduct } from '~/services/ProductService';
+import { getProduct, getProducts } from '~/services/ProductService';
 
 import Button from '~/components/Buyer/Button';
 import { WrapperComponent, WrapperContent } from '~/components/Buyer/Wrapper';
-import Carousel from '~/components/Buyer/Carousel';
-import BannerCarousel from '~/components/Buyer/Carousel/BannerCarousel';
 
 import classNames from 'classnames/bind';
+import {Carousel, BannerItem, CardProductItem } from '~/components/Buyer/Carousel';
+import Grid from '~/components/Buyer/Grid';
 import styles from './DetailProduct.module.scss';
 const cx = classNames.bind(styles);
 
 function DetailProduct() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
-    const [productItems, setProductItems] = useState(null);
-    const [images, setImages] = useState([]);
+    const productItems = [];
+    const [specification, setSpecification] = useState({});
+
+    const [shopProducts, setShopProducts] = useState([]);
+    const [relevantProducts, setRelevantProducts] = useState([]);
 
     useEffect(() => {
         getProduct({ id })
             .then((response) => {
                 setProduct(response);
-                images.push(response.image);
-                response.productItems.forEach((element) => {
-                    images.push(element.image);
-                });
-                setProductItems(response.productItems);
+
+                productItems = response.productItems;
+                setSpecification(response.specification);
                 console.log(response);
             })
             .catch((error) => console.error('Error fetching data:', error));
     }, []);
 
+    useEffect(() => {
+        // getProductsBySellerId({ id })
+        //     .then((response) => {
+        //         setShopProducts(response);
+        //         console.log(response);
+        //     })
+        //     .catch((error) => console.error('Error fetching data:', error));
+        getProducts()
+            .then((response) => {
+                setShopProducts(response);
+            })
+            .catch((error) => console.error('Error fetching data:', error));
+    }, []);
+
     return (
-        <WrapperComponent className={cx('content')}>
+        <Row align={'middle'} justify={'center'} className={cx('content')}>
             {/* PRODUCT INFORMATION GENERAL */}
-            <div>
+            <WrapperComponent>
                 <WrapperContent>
-                    <Row className={cx('detail')}>
-                        <Col lg={12} sm={24} md={24}>
-                            <Carousel className={cx('carousel')}>
-                                <BannerCarousel items={images} slidesToShow={1}></BannerCarousel>
-                            </Carousel>
+                    <Row className={cx('detail')} gutter={[30, 0]}>
+                        <Col lg={10} sm={24} md={24}>
+                            <Carousel
+                                items={product?.images}
+                                element={<BannerItem />}
+                                showIndicators={false}
+                                autoplay={false}
+                                slidesToShow={1}
+                                controlType={'banner'}
+                            />
                         </Col>
-                        <Col lg={12} className={cx('basic-info')}>
+                        <Col lg={14} className={cx('basic-info')}>
                             <Space size={'middle'} direction={'vertical'}>
                                 <h1>{product?.name}</h1>
                                 <Space size={'small'}>
-                                    <div className={cx('rate')}>
-                                        <StarFill />
-                                        <StarFill />
-                                        <StarFill />
-                                        <StarHalf />
-                                        <Star />
-                                    </div>
+                                    <Rate allowHalf defaultValue={3.5} className={cx('rate')} disabled />
                                     <span>(50 Reviews)</span>
                                 </Space>
                                 <Space size={'small'}>
                                     <p className={cx('title')}>Price </p>
-                                    <h1 className={cx('price')}>{product?.avgPrice}</h1>
+                                    <h1 className={cx('price')}>{product?.additionalInfo.avgPrice}</h1>
                                 </Space>
                                 <Space size={'small'} direction={'vertical'}>
                                     {product &&
@@ -91,7 +105,7 @@ function DetailProduct() {
                                 <Space size={'small'}>
                                     <p className={cx('title')}>Quantity </p>
                                     <InputNumber min={1} max={10} defaultValue={1} size="large" />
-                                    <span>{product?.totalStock + ' pieces available'}</span>
+                                    <span>{product?.additionalInfo.totalStock + ' pieces available'}</span>
                                 </Space>
                                 <div>
                                     <Button size={'normal'} type={'outline'} leftIcon={<CartPlus />}>
@@ -102,85 +116,141 @@ function DetailProduct() {
                         </Col>
                     </Row>
                 </WrapperContent>
-            </div>
+            </WrapperComponent>
 
             {/* SHOP INFORMATION DETAIL */}
-            <div>
-                <Row className={cx('shop-container')} align={'middle'} justify={'space-between'}>
-                    <Col span={8}>
-                        <Space>
-                            <div>
-                                <img
-                                    src="https://res.cloudinary.com/dald4jiyw/image/upload/v1697031664/Default_pfp.svg_xkjczv.png"
-                                    alt="Avatar image"
-                                />
-                            </div>
-                            <Space direction={'vertical'}>
+            <WrapperComponent>
+                <WrapperContent>
+                    <Row className={cx('shop-container')} align={'middle'} justify={'space-between'}>
+                        <Col xl={8} lg={10} sm={24}>
+                            <Space>
                                 <div>
-                                    <p class="shop-info-name">0l9ih6qg_t</p>
+                                    <img
+                                        className={cx('shop-avatar')}
+                                        src="https://res.cloudinary.com/dald4jiyw/image/upload/v1697031664/Default_pfp.svg_xkjczv.png"
+                                        alt="Avatar image"
+                                    />
                                 </div>
-                                <Space>
-                                    <Button type={'outline'} size={'small'} leftIcon={<ShopWindow />}>
-                                        VIEW SHOP
-                                    </Button>
-                                    <Button type={'normal'} size={'small'} leftIcon={<ChatSquareText />}>
-                                        CHAT NOW
-                                    </Button>
+                                <Space direction={'vertical'}>
+                                    <div>
+                                        <p>0l9ih6qg_t</p>
+                                    </div>
+                                    <Space>
+                                        <Button type={'outline'} size={'small'} leftIcon={<ShopWindow />}>
+                                            VIEW SHOP
+                                        </Button>
+                                        <Button type={'default'} size={'small'} leftIcon={<ChatSquareText />}>
+                                            CHAT NOW
+                                        </Button>
+                                    </Space>
                                 </Space>
                             </Space>
-                        </Space>
-                        <Divider type="vertical" />
-                    </Col>
-                    <Col span={16}>
-                        <Row gutter={[40, 0]}>
-                            <Col span={8}>
-                                <Row justify={'space-between'}>
-                                    <p>Products: </p> <span className={cx('shop-info-value')}>0</span>
-                                </Row>
-                                <Row justify={'space-between'}>
-                                    <p>Following: </p> <span className={cx('shop-info-value')}>0</span>
-                                </Row>
-                            </Col>
-                            <Col span={8}>
-                                <Row justify={'space-between'}>
-                                    <p>Chat Performance: </p> <span className={cx('shop-info-value')}>57%</span>
-                                </Row>
-                                <Row justify={'space-between'}>
-                                    <p>Followers: </p> <span className={cx('shop-info-value')}>0</span>
-                                </Row>
-                            </Col>
-                            <Col span={8}>
-                                <Row justify={'space-between'}>
-                                    <p>Rating: </p> <span className={cx('shop-info-value')}>0</span>
-                                </Row>
-                                <Row justify={'space-between'}>
-                                    <p>Joined: </p> <span className={cx('shop-info-value')}>0</span>
-                                </Row>
-                            </Col>
-                        </Row>
-                    </Col>
-                </Row>
-            </div>
+                            <Divider type="vertical" />
+                        </Col>
+                        <Col xl={16} lg={14} sm={24}>
+                            <Row gutter={{ xl: 40, lg: 20 }}>
+                                <Col xl={8} lg={12}>
+                                    <Row justify={'space-between'}>
+                                        <span>Products </span> <span className={cx('shop-info-value')}>0</span>
+                                    </Row>
+                                </Col>
+                                <Col xl={8} lg={12}>
+                                    <Row justify={'space-between'}>
+                                        <p>Following </p> <span className={cx('shop-info-value')}>0</span>
+                                    </Row>
+                                </Col>
+                                <Col xl={8} lg={12}>
+                                    <Row justify={'space-between'}>
+                                        <p>Chat Performance </p> <span className={cx('shop-info-value')}>57%</span>
+                                    </Row>
+                                </Col>
+                                <Col xl={8} lg={12}>
+                                    <Row justify={'space-between'}>
+                                        <p>Followers </p> <span className={cx('shop-info-value')}>0</span>
+                                    </Row>
+                                </Col>
+                                <Col xl={8} lg={12}>
+                                    <Row justify={'space-between'}>
+                                        <p>Rating </p> <span className={cx('shop-info-value')}>0</span>
+                                    </Row>
+                                </Col>
+                                <Col xl={8} lg={12}>
+                                    <Row justify={'space-between'}>
+                                        <p>Joined </p> <span className={cx('shop-info-value')}>0</span>
+                                    </Row>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
+                </WrapperContent>
+            </WrapperComponent>
 
             {/* PRODUCT INFORMATION DETAIL  */}
-            <div>
-                <WrapperComponent>
-                    <Tabs
-                        defaultActiveKey="1"
-                        type="card"
-                        size={'large'}
-                        items={new Array(3).fill(null).map((_, i) => {
-                            const id = String(i + 1);
-                            return {
-                                label: `Card Tab ${id}`,
-                                key: id,
-                                children: `Content of card tab ${id}`,
-                            };
-                        })}
-                    />
-                </WrapperComponent>
-            </div>
-        </WrapperComponent>
+            <WrapperComponent>
+                <WrapperContent>
+                    <Row gutter={[0, 30]}>
+                        <Col span={24} className={cx('product-detail-container')}>
+                            <span className={cx('small-title')}>Product Specifications</span>
+                            <div className={cx('product-detail-content')}>
+                                {Object.entries(specification).map(([specKey, specValue]) => (
+                                    <div key={specKey}>
+                                        <span className={cx('spec-key')}>{specKey}</span>
+                                        <span>{specValue}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </Col>
+
+                        <Col span={24} className={cx('product-detail-container')}>
+                            <span className={cx('small-title')}>Product Description</span>
+
+                            <div
+                                className={cx('product-detail-content')}
+                                dangerouslySetInnerHTML={{ __html: product?.description }}
+                            />
+                        </Col>
+
+                        <Col span={24} className={cx('product-detail-container')}>
+                            <span className={cx('small-title')}>Product Ratings</span>
+
+                            <div
+                                className={cx('product-detail-content')}
+                                dangerouslySetInnerHTML={{ __html: product?.description }}
+                            />
+                        </Col>
+                    </Row>
+                </WrapperContent>
+            </WrapperComponent>
+
+            {/* From The Same Shop */}
+            <WrapperComponent>
+                <WrapperContent>
+                    <Row>
+                        <span className={cx('small-title')}>FROM THE SAME SHOP</span>
+                    </Row>
+                    {shopProducts?.length > 0 && (
+                        <Carousel
+                            items={shopProducts}
+                            element={<CardProductItem />}
+                            showIndicators={false}
+                            autoplay={false}
+                            slidesToShow={6}
+                            controlType={'card'}
+                        />
+                    )}
+                </WrapperContent>
+            </WrapperComponent>
+
+            {/* YOU MAY ALSO LIKE */}
+            <WrapperComponent>
+                <WrapperContent>
+                    <Row>
+                        <span className={cx('small-title')}>YOU MAY ALSO LIKE</span>
+                    </Row>
+                    {shopProducts?.length > 0 && <Grid items={shopProducts} element={<CardProductItem />} />}
+                </WrapperContent>
+            </WrapperComponent>
+        </Row>
     );
 }
 

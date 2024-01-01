@@ -1,7 +1,6 @@
 .wrapper {
     --heigh-input-search: 38px;
     --width-input-seach: 600px;
-    --max-width-fullname: 120px;
     --width-input-btn: 50px;
     --border-radius-input: 4px;
 
@@ -111,22 +110,10 @@
 }
 
 .drop-down {
-    min-width: 175px;
+    min-width: 170px;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
-    height: 24px;
     font-size: 1.5rem;
     cursor: pointer;
-
-    .full-name {
-        display: block;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        border: none;
-        max-width: var(--max-width-fullname);
-        overflow: hidden;
-        margin-right: 2px;
-    }
-
 }

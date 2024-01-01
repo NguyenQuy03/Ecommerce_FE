@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import Button from '~/components/Buyer/Button';
-import Carousel from '~/components/Buyer/Carousel';
-import CardCarousel from '~/components/Buyer/Carousel/CardCarousel';
 import { WrapperComponent } from '~/components/Buyer/Wrapper';
 
 import TitleSection from '~/components/Buyer/TitleSection';
 
 import { getCategories } from '~/services/CategoryService';
 import { getProducts } from '~/services/ProductService';
+
+import { Carousel, CardCategoryItem, CardProductItem } from '~/components/Buyer/Carousel';
 
 import classNames from 'classnames/bind';
 import styles from './Home.module.scss';
@@ -39,9 +39,14 @@ function Home() {
 
             {categories?.length > 0 && (
                 <WrapperComponent>
-                    <Carousel>
-                        <CardCarousel type="category" items={categories} showIndicators={false} autoplay={false} />
-                    </Carousel>
+                    <Carousel
+                        items={categories}
+                        element={<CardCategoryItem />}
+                        showIndicators={false}
+                        autoplay={false}
+                        slidesToShow={6}
+                        controlType={'card'}
+                    />
                 </WrapperComponent>
             )}
 
@@ -49,12 +54,14 @@ function Home() {
 
             {products?.length > 0 && (
                 <WrapperComponent>
-                    <CardCarousel
-                        type="product"
+                    <Carousel
                         items={products}
+                        element={<CardProductItem />}
                         showIndicators={false}
-                        showControls={false}
+                        showControls={true}
                         autoplay={false}
+                        slidesToShow={6}
+                        controlType={'card'}
                     />
                 </WrapperComponent>
             )}
@@ -64,7 +71,6 @@ function Home() {
                     See More
                 </Button>
             </div>
-            {/* <FloatButton.BackTop icon={<ChevronDoubleUp />}></FloatButton.BackTop> */}
         </div>
     );
 }

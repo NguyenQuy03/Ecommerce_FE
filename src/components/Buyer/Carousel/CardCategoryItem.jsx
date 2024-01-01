@@ -1,9 +1,9 @@
-import { Card, Flex } from 'antd';
+import { Card, Flex, Image } from 'antd';
 
 import PropTypes from 'prop-types';
 
 import classNames from 'classnames/bind';
-import styles from './CardCarousel.module.scss';
+import styles from './Carousel.module.scss';
 const cx = classNames.bind(styles);
 
 function CardCategoryItem({ data }) {
@@ -28,7 +28,7 @@ function CardCategoryItem({ data }) {
                 hoverable
                 cover={
                     <div style={{ overflow: 'hidden' }}>
-                        <img src={data.thumbnail} alt="Card" />
+                        <Image src={data.thumbnail} alt="Card" preview={false}/>
                     </div>
                 }
                 bodyStyle={{ padding: '4px' }}
@@ -41,6 +41,8 @@ function CardCategoryItem({ data }) {
                     </Flex>
                 </Flex>
             </Card>
+
+            
         );
     }
 }
@@ -48,7 +50,7 @@ function CardCategoryItem({ data }) {
 CardCategoryItem.propTypes = {
     data: PropTypes.shape({
         code: PropTypes.string,
-    }).isRequired,
+    }),
 };
 
 export default CardCategoryItem;

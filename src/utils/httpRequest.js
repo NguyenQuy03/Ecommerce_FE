@@ -15,13 +15,13 @@ const httpRequest = axios.create({
 //     return Promise.reject(error);
 // });
 
-export const get = async (path, options = {}) => {
-    const response = await httpRequest.get(path, options);
+export const get = async (path, params = {}) => {
+    const response = await httpRequest.get(path, params);
     return response;
 };
 
-export const post = async (path, data = {}, options = {}) => {
-    const response = httpRequest.post(path, data, options)
+export const post = async (path, data = {}, params = {}) => {
+    const response = httpRequest.post(path, data, params)
     return response;
 };
 

@@ -23,6 +23,12 @@ html {
     font-size: 62.5%;
 }
 
+@media (max-width: 1200px) {
+    html {
+        font-size: 58%;
+    }
+}
+
 body {
     font-size: 1.6rem;
     line-height: 1.5;

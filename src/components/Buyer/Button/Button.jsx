@@ -65,9 +65,9 @@ function Button({
 Button.propTypes = {
     to: PropTypes.string,
     href: PropTypes.string,
-    type: PropTypes.oneOf(['normal', 'primary', 'outline', 'transparent']),
-    size: PropTypes.oneOf(['normal', 'small', 'large']),
-    shape: PropTypes.oneOf(['normal', 'rounded', 'vertical']),
+    type: PropTypes.oneOf(['default', 'primary', 'outline', 'transparent']),
+    size: PropTypes.oneOf(['normal', 'small', 'large', 'tiny']),
+    shape: PropTypes.oneOf(['rounded', 'vertical']),
     disabled: PropTypes.bool,
     children: PropTypes.node.isRequired,
     leftIcon: PropTypes.node,
