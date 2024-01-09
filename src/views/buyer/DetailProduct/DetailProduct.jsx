@@ -7,18 +7,18 @@ import { CartPlus, ChatSquareText, ShopWindow } from 'react-bootstrap-icons';
 import { getProduct, getProducts } from '~/services/ProductService';
 
 import Button from '~/components/Buyer/Button';
+import { BannerItem, CardProductItem, Carousel } from '~/components/Buyer/Carousel';
+import Grid, { RcmProducts } from '~/components/Buyer/Grid';
 import { WrapperComponent, WrapperContent } from '~/components/Buyer/Wrapper';
 
 import classNames from 'classnames/bind';
-import {Carousel, BannerItem, CardProductItem } from '~/components/Buyer/Carousel';
-import Grid from '~/components/Buyer/Grid';
 import styles from './DetailProduct.module.scss';
 const cx = classNames.bind(styles);
 
 function DetailProduct() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
-    const productItems = [];
+    let productItems = [];
     const [specification, setSpecification] = useState({});
 
     const [shopProducts, setShopProducts] = useState([]);
@@ -242,14 +242,7 @@ function DetailProduct() {
             </WrapperComponent>
 
             {/* YOU MAY ALSO LIKE */}
-            <WrapperComponent>
-                <WrapperContent>
-                    <Row>
-                        <span className={cx('small-title')}>YOU MAY ALSO LIKE</span>
-                    </Row>
-                    {shopProducts?.length > 0 && <Grid items={shopProducts} element={<CardProductItem />} />}
-                </WrapperContent>
-            </WrapperComponent>
+            <RcmProducts title={'YOU MAY ALSO LIKE'} items={shopProducts}/>
         </Row>
     );
 }

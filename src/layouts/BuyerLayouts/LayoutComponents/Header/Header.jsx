@@ -1,20 +1,43 @@
-import Tippy from '@tippyjs/react/headless';
-import { Badge, Col, Dropdown, Row, Typography } from 'antd';
+import { AutoComplete, Badge, Col, Dropdown, Flex, Input, Row, Typography } from 'antd';
 import { Header as AntHeader } from 'antd/es/layout/layout';
 import { useEffect, useState } from 'react';
-import { Cart, ChevronDown, Search, ShopWindow } from 'react-bootstrap-icons';
+import { Cart, ChevronDown } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 
 import images from '~/assets/images';
 import Button from '~/components/Buyer/Button';
-import { Popper as PopperWrapper } from '~/components/Buyer/Popper';
 
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 const cx = classNames.bind(styles);
 const { Text } = Typography;
 
-const items = [
+const renderTitle = (title) => <span>{title}</span>;
+const renderItem = (title) => ({
+    value: title,
+    label: (
+        <div
+            style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+            }}
+        >
+            {title}
+        </div>
+    ),
+});
+const options = [
+    {
+        label: renderTitle('Shops'),
+        options: [renderItem('AntDesign'), renderItem('AntDesign UI')],
+    },
+    {
+        label: renderTitle('Products'),
+        options: [renderItem('AntDesign UI FAQ'), renderItem('AntDesign FAQ')],
+    },
+];
+
+const menuItems = [
     {
         key: '1',
         label: <Link to="/profile">My Profile</Link>,
@@ -48,7 +71,6 @@ function Header() {
 
     return (
         <AntHeader className={cx('wrapper')}>
-            {/* <Col span={24}> */}
             <Row className={cx('inner')} justify="space-between" align="middle">
                 <Col sm={12} lg={6}>
                     <Link to="/">
@@ -56,50 +78,29 @@ function Header() {
                     </Link>
                 </Col>
 
-                <Col lg={12} sm={24}>
-                    <Tippy
-                        interactive
-                        visible={searchResult.length > 0}
-                        placement="bottom-end"
-                        render={(attrs) => (
-                            <div className={cx('search-result')} tabIndex="-1" {...attrs}>
-                                <PopperWrapper>
-                                    <h4 className={cx('search-title')}>
-                                        <ShopWindow /> Search "Quan" Shops
-                                    </h4>
-                                    {/* <SearchSuggestItem />
-                                    <SearchSuggestItem />
-                                    <SearchSuggestItem />
-                                    <SearchSuggestItem /> */}
-                                </PopperWrapper>
-                            </div>
-                        )}
-                    >
-                        <div className={cx('search')}>
-                            <input placeholder="Search for products" spellCheck={false} />
-
-                            <button className={cx('search-btn')}>
-                                <Search />
-                            </button>
-                        </div>
-                    </Tippy>
+                <Col lg={12} sm={24} style={{ display: 'flex' }}>
+                    <AutoComplete className={cx('search')} options={options} allowClear>
+                        <Input.Search size="large" placeholder="Search for products" />
+                    </AutoComplete>
                 </Col>
 
                 <Col className={cx('actions')} sm={12} lg={6}>
                     {isLogin ? (
                         <Row justify="end" align={'middle'}>
-                            <Badge
-                                className={cx('cart-content')}
-                                color="#d19c97"
-                                count={orderQuantity}
-                                overflowCount={9}
-                            >
-                                <Cart />
-                            </Badge>
+                            <Link to={'/cart'}>
+                                <Badge
+                                    className={cx('cart-content')}
+                                    color="#d19c97"
+                                    count={orderQuantity}
+                                    overflowCount={9}
+                                >
+                                    <Cart />
+                                </Badge>
+                            </Link>
                             <Dropdown
                                 className={cx('drop-down')}
                                 menu={{
-                                    items,
+                                    items: menuItems,
                                 }}
                                 arrow={false}
                             >
@@ -130,7 +131,6 @@ function Header() {
                     )}
                 </Col>
             </Row>
-            {/* </Col> */}
         </AntHeader>
     );
 }
