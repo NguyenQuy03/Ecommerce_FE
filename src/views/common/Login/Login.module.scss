@@ -1,6 +1,9 @@
 
 .content {
     width: 380px;
+    padding: 10px 20px;
+    border: solid 1px var(--secondary);
+    border-radius: 8px;
 }
 
 .header {
@@ -21,6 +24,7 @@
     justify-content: center;
     width: 100%;
     margin-top: 16px;
+    padding: 6px 0;
 
     .field {
         height: 34px;

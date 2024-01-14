@@ -22,16 +22,17 @@ const tailLayout = {
 const maxLengthInput = 40;
 
 const Login = () => {
-    // const { setAuth } = useAuth();
+    const { setAuth } = useAuth();
 
     const navigate = useNavigate();
     const location = useLocation();
+
     const [api, contextHolder] = notification.useNotification();
     const usernameRef = useRef();
 
     const from = location.state?.from?.pathname || '/';
 
-    const [respData, setRespData] = useState(location.state || { message: '', status: 'success' });
+    const [respData, setRespData] = useState(location.state);
 
     const openNotification = useCallback((placement, status, message) => {
         api[status]({
@@ -44,7 +45,9 @@ const Login = () => {
     }, [api]);
 
     useEffect(() => {
-        openNotification('topRight', respData?.status, respData?.message);
+        if(respData) {
+            openNotification('topRight', respData?.status, respData?.message);
+        }
     }, [respData, openNotification]);
 
     useEffect(() => {
@@ -56,7 +59,7 @@ const Login = () => {
             .then((response) => {
                 const accessToken = response?.data?.accessToken;
                 const roles = response?.data?.roles;
-                // setAuth({ roles, accessToken });
+                setAuth({ roles, accessToken });
 
                 Cookies.set('access_token', accessToken, { expires: 1 / 24 / 10 });
                 navigate(from, {

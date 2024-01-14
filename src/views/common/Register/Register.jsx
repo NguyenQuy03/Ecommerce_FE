@@ -11,8 +11,13 @@ const cx = classNames.bind(styles);
 const maxLengthName = 40;
 const maxLengthEmail = 100;
 
+const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+// const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const emailRegex =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[\d.]{1,3}\.[\d.]{1,3}\.[\d.]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 const layout = {
-    labelCol: { span: 10 },
+    labelCol: { span: 12 },
     wrapperCol: { span: 24 },
 };
 const tailLayout = {
@@ -22,8 +27,8 @@ const tailLayout = {
 const Register = () => {
     const navigate = useNavigate();
 
+    // Set Value Error
     const [form] = Form.useForm();
-
     const setFieldError = (fieldName, errorValue) => {
         form.setFields([
             {
@@ -46,18 +51,12 @@ const Register = () => {
                         setFieldError(key, value);
                     });
                 } else {
-                    console.log("Sth else wrong");
+                    console.log('Sth else wrong');
                 }
             });
     };
 
-    const onFinishFailed = (errorInfo) => {
-        console.log('Failed:', errorInfo);
-    };
-
     const validateEmail = async (rule, value) => {
-        const emailRegex =
-            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[\d.]{1,3}\.[\d.]{1,3}\.[\d.]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (!emailRegex.test(value) && value) {
             throw new Error('Invalid email address');
         }
@@ -78,7 +77,6 @@ const Register = () => {
                 autoComplete="off"
                 layout="vertical"
                 onFinish={onFinish}
-                onFinishFailed={onFinishFailed}
             >
                 <Form.Item
                     labelAlign="left"
@@ -91,48 +89,46 @@ const Register = () => {
                 >
                     <Input className={cx('field')} />
                 </Form.Item>
-
                 <Form.Item
                     labelAlign="left"
                     label="Username"
                     name="username"
                     rules={[
-                        { required: true, message: 'Please input your ${name}!' },
+                        { required: true, message: 'Please input your username!' },
                         {
-                            pattern: /^[a-zA-Z0-9]*$/,
+                            pattern: USER_REGEX,
                             message: 'Username can only contain letters and digits',
                         },
-                        { max: maxLengthName, message: 'The length of your ${name} is too long' },
+                        { max: maxLengthName, message: 'The length of your username is too long' },
                     ]}
                 >
                     <Input className={cx('field')} />
                 </Form.Item>
-
                 <Form.Item
                     label="Email"
                     name="email"
                     rules={[
-                        { required: true, message: 'Please input your ${name}!' },
+                        { required: true, message: 'Please input your email!' },
                         { validator: validateEmail },
-                        { max: maxLengthEmail, message: 'The length of your ${name} is too long' },
+                        { max: maxLengthEmail, message: 'The length of your email is too long' },
                     ]}
                     hasFeedback
                 >
                     <Input type="email" className={cx('field')} />
                 </Form.Item>
-
                 <Form.Item
                     name="password"
                     label="Password"
                     rules={[
                         {
                             required: true,
-                            message: 'Please input your ${name}!',
+                            message: 'Please input your email!',
                         },
                     ]}
                 >
                     <Input type="password" className={cx('field')} />
                 </Form.Item>
+                
 
                 <Form.Item
                     label="Confirm Password"
@@ -156,7 +152,6 @@ const Register = () => {
                 >
                     <Input type="password" className={cx('field')} addonAfter={''} />
                 </Form.Item>
-
                 <Form.Item {...tailLayout}>
                     <Button className={cx('submit-btn')} type="primary" size={'large'} htmltype="submit">
                         Create Account

@@ -1,11 +1,11 @@
-import { Link } from 'react-router-dom';
 import { Footer as AntFooter } from 'antd/es/layout/layout';
+import { Link } from 'react-router-dom';
 
 import { Col, Divider, List, Row } from 'antd';
-import classNames from 'classnames/bind';
-import styles from '../Footer/Footer.module.scss';
 import { Facebook, Instagram, Linkedin } from 'react-bootstrap-icons';
 
+import classNames from 'classnames/bind';
+import styles from '../Footer/Footer.module.scss';
 const cx = classNames.bind(styles);
 
 const custommerServiceData = [
@@ -33,7 +33,7 @@ const followData = [
 
 function Footer() {
     return (
-        <AntFooter className={cx('wrapper')} >
+        <AntFooter className={cx('wrapper')}>
             <div className={cx('content')}>
                 <div>
                     <Row

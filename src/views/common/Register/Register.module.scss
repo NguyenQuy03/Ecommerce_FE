@@ -1,6 +1,9 @@
 .content {
     height: 100%;
     width: 400px;
+    padding: 10px 20px;
+    border: solid 1px var(--secondary);
+    border-radius: 8px;
 }
 
 .header {

@@ -1,0 +1,29 @@
+
+.filter {
+
+    .rate {
+        color: var(--primary);
+        font-size: 1.4rem;
+    }
+
+    .rate-item {
+        border: none;
+        justify-content: flex-start;
+    }
+}
+
+.sort-bar {
+    display: flex;
+    align-items: center;
+    padding: 1.3rem 2rem;
+    margin-bottom: 1.2rem;
+    gap: 4rem;
+    border-radius: 4px;
+    background-color: var(--secondary);
+
+    .price-sort {
+        width: 200px;
+        min-height: 3.6rem;
+        margin-left: 2rem;
+    }
+}

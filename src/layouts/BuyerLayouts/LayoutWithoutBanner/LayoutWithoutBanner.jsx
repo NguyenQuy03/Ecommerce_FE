@@ -1,10 +1,9 @@
-import Layout from 'antd/es/layout/layout';
-import { Header, Footer } from '~/layouts/BuyerLayouts/LayoutComponents';
-import { Row, Col } from 'antd';
+import { Col, Row } from 'antd';
+import { Footer, Header } from '~/layouts/BuyerLayouts/LayoutComponents';
 
 function LayoutWithoutSlider({ children }) {
     return (
-        <Layout>
+        <>
             <Header />
             <Row align={'middle'}>
                 <Col span={24}>
@@ -14,7 +13,7 @@ function LayoutWithoutSlider({ children }) {
                 </Col>
             </Row>
             <Footer />
-        </Layout>
+        </>
     );
 }
 

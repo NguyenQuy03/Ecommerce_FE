@@ -1,4 +1,4 @@
-import { AutoComplete, Badge, Col, Dropdown, Flex, Input, Row, Typography } from 'antd';
+import { AutoComplete, Badge, Col, Dropdown, Input, Row, Typography } from 'antd';
 import { Header as AntHeader } from 'antd/es/layout/layout';
 import { useEffect, useState } from 'react';
 import { Cart, ChevronDown } from 'react-bootstrap-icons';
@@ -40,11 +40,11 @@ const options = [
 const menuItems = [
     {
         key: '1',
-        label: <Link to="/profile">My Profile</Link>,
+        label: <Link to="/user/account/profile">My Profile</Link>,
     },
     {
         key: '2',
-        label: <Link to="/purchase">My Purchase</Link>,
+        label: <Link to="/user/purchase">My Purchase</Link>,
     },
     {
         key: '3',

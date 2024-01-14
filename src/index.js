@@ -6,27 +6,27 @@ import reportWebVitals from './reportWebVitals';
 import GlobalStyle from '~/components/Buyer/GlobalStyle';
 
 import { ConfigProvider } from 'antd';
-import AuthProvider from './context/AuthProvider';
+import { AuthProvider } from './context/AuthProvider';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
-  // <React.StrictMode>
-  //   {/* <AuthProvider> */}
-  //   {/* </AuthProvider> */}
-  // </React.StrictMode>
-  <ConfigProvider
-    theme={{
-      token: {
-        colorPrimary: '#D19C97',
-        fontFamily: "Poppins"
-      },
-    }}
-  >
-    <GlobalStyle>
-      <App />
-    </GlobalStyle>
-  </ConfigProvider>
+  <React.StrictMode>
+    <AuthProvider>
+      <ConfigProvider
+        theme={{
+          token: {
+            colorPrimary: '#D19C97',
+            fontFamily: "Poppins"
+          },
+        }}
+      >
+        <GlobalStyle>
+          <App />
+        </GlobalStyle>
+      </ConfigProvider>
+    </AuthProvider>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

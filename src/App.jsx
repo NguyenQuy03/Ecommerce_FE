@@ -1,4 +1,3 @@
-import { Fragment } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import RequireAuth from './utils/RequireAuth';
@@ -37,6 +36,7 @@ function App() {
                             />
                         );
                     })}
+
                     {commonRoutes.map((route, index) => {
                         let Layout = route.layout || LayoutBlank;
                         let Page = route.component;
