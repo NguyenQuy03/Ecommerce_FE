@@ -8,7 +8,7 @@ import { getProduct, getProducts } from '~/services/ProductService';
 
 import Button from '~/components/Buyer/Button';
 import { BannerItem, CardProductItem, Carousel } from '~/components/Buyer/Carousel';
-import Grid, { RcmProducts } from '~/components/Buyer/Grid';
+import { RcmProducts } from '~/components/Buyer/Grid';
 import { WrapperComponent, WrapperContent } from '~/components/Buyer/Wrapper';
 
 import classNames from 'classnames/bind';
@@ -18,23 +18,21 @@ const cx = classNames.bind(styles);
 function DetailProduct() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
-    let productItems = [];
     const [specification, setSpecification] = useState({});
 
     const [shopProducts, setShopProducts] = useState([]);
-    const [relevantProducts, setRelevantProducts] = useState([]);
+    // const [relevantProducts, setRelevantProducts] = useState([]);
 
     useEffect(() => {
         getProduct({ id })
             .then((response) => {
                 setProduct(response);
 
-                productItems = response.productItems;
                 setSpecification(response.specification);
                 console.log(response);
             })
             .catch((error) => console.error('Error fetching data:', error));
-    }, []);
+    }, [id]);
 
     useEffect(() => {
         // getProductsBySellerId({ id })
@@ -128,7 +126,7 @@ function DetailProduct() {
                                     <img
                                         className={cx('shop-avatar')}
                                         src="https://res.cloudinary.com/dald4jiyw/image/upload/v1697031664/Default_pfp.svg_xkjczv.png"
-                                        alt="Avatar image"
+                                        alt="Avatar"
                                     />
                                 </div>
                                 <Space direction={'vertical'}>
@@ -242,7 +240,7 @@ function DetailProduct() {
             </WrapperComponent>
 
             {/* YOU MAY ALSO LIKE */}
-            <RcmProducts title={'YOU MAY ALSO LIKE'} items={shopProducts}/>
+            <RcmProducts title={'YOU MAY ALSO LIKE'} items={shopProducts} />
         </Row>
     );
 }

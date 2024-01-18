@@ -21,7 +21,7 @@ export const get = async (path, params = {}) => {
 };
 
 export const post = async (path, data = {}, params = {}) => {
-    const response = httpRequest.post(path, data, params)
+    const response = await httpRequest.post(path, data, params)
     return response;
 };
 

@@ -38,15 +38,14 @@ function Carousel({
     slidesToShow = 6,
     ...passProps
 }) {
-    const carouselContent = useRef(null);
-    const carouselSlider = useRef(null);
+    const carouselRef = useRef(null);
 
     const nextSlide = () => {
-        carouselSlider.current.next();
+        carouselRef.current.next();
     };
-
+    
     const prevSlide = () => {
-        carouselSlider.current.prev();
+        carouselRef.current.prev();
     };
 
     while (items?.length < slidesToShow) {
@@ -89,7 +88,7 @@ function Carousel({
             : undefined;
 
     return (
-        <div className={cx('content')} ref={carouselContent} {...passProps}>
+        <div className={cx('content')} {...passProps}>
             {showControls && (
                 <Button
                     onClick={prevSlide}
@@ -102,7 +101,7 @@ function Carousel({
                 </Button>
             )}
             <AntCarousel
-                ref={carouselSlider}
+                ref={carouselRef}
                 slidesToShow={slidesToShow}
                 autoplay={autoplay}
                 infinite={infinite}

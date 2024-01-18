@@ -3,16 +3,21 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import RequireAuth from './utils/RequireAuth';
 import { LayoutDefault } from '~/layouts/BuyerLayouts';
 import { LayoutBlank } from './layouts/CommonLayouts';
+import { DashboardLayout } from './layouts/ManagerLayouts';
 import { publicRoutes as BuyerPublicRoutes } from '~/routes/buyer';
 import { publicRoutes as CommonPublicRoutes } from '~/routes/common';
+
+import { publicRoutes as ManagerPublicRoutes } from '~/routes/manager';
 
 const buyerRoutes = [...BuyerPublicRoutes];
 const commonRoutes = [...CommonPublicRoutes];
 
+const managerRoutes = [...ManagerPublicRoutes];
+
 const ROLES = {
-    MANAGER: 20001,
-    BUYER: 20002,
-    SELLER: 20003,
+    Buyer: 'ROLE_20001',
+    Seller: 'ROLE_20002',
+    Manager: 'ROLE_20003',
 };
 
 function App() {
@@ -20,8 +25,27 @@ function App() {
         <BrowserRouter>
             <div className="App">
                 <Routes>
-                    {buyerRoutes.map((route, index) => {
-                        let Layout = route.layout || LayoutDefault;
+                    <Route path="/" element={<RequireAuth allowedRoles={[ROLES.Buyer]} />}>
+                        {buyerRoutes.map((route, index) => {
+                            let Layout = route.layout || LayoutDefault;
+                            let Page = route.component;
+
+                            return (
+                                <Route
+                                    key={index}
+                                    path={route.path}
+                                    element={
+                                        <Layout>
+                                            <Page />
+                                        </Layout>
+                                    }
+                                />
+                            );
+                        })}
+                    </Route>
+
+                    {managerRoutes.map((route, index) => {
+                        let Layout = route.layout || DashboardLayout;
                         let Page = route.component;
 
                         return (

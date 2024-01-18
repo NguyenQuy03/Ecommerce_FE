@@ -78,17 +78,23 @@ const Cart = () => {
     return (
         <>
             <WrapperComponent>
-                <Table pagination={false} rowSelection={rowSelection} columns={columns} dataSource={data} bordered size={'large'}/>
+                <Table
+                    pagination={false}
+                    rowSelection={rowSelection}
+                    columns={columns}
+                    dataSource={data}
+                    bordered
+                    size={'large'}
+                    title={() => `Shopping Cart (${shopProducts.length} items)`}
+                />
             </WrapperComponent>
             <WrapperComponent>
                 <Affix offsetBottom={0}>
                     <WrapperContent className={cx('affix-container')}>
                         <Row>
+                            <Col span={12}></Col>
                             <Col span={12}>
-
-                            </Col>
-                            <Col span={12}>
-                                <Row >Platform Voucher</Row>
+                                <Row>Platform Voucher</Row>
                                 <Row justify={'end'}>
                                     <Col span={6}>
                                         <span>{`Selected (${selectedRowKeys.length} items): `}</span>
@@ -108,7 +114,7 @@ const Cart = () => {
             </WrapperComponent>
 
             {/* YOU MAY ALSO LIKE */}
-            <RcmProducts title={'YOU MAY ALSO LIKE'} items={shopProducts}/>
+            <RcmProducts title={'YOU MAY ALSO LIKE'} items={shopProducts} />
         </>
     );
 };

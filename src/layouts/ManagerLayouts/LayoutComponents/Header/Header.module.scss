@@ -1,0 +1,9 @@
+.wrapper {
+    background-color: var(--white);
+
+    .drop-down {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+    }
+}

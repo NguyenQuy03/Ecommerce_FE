@@ -1,26 +1,19 @@
 
 
 //Layout
-import { WithOutSidebarLayout } from "~/components/Layout";
 
 //Pages
-import Home from "~/Pages/Home";
-import Following from "~/Pages/Following";
-import Profile from "~/Pages/Profile";
-import Upload from "~/Pages/Upload";
-import Search from "~/Pages/Search";
+import { CategoryTable, CategoryForm } from "~/views/manager";
 
 //Path
 const publicRoutes = [
-    { path: '/', component: Home },
-    { path: '/following', component: Following },
-    { path: '/profile', component: Profile },
-    { path: '/upload', component: Upload, layout: WithOutSidebarLayout },
-    { path: '/search', component: Search, layout: null },
+    { path: '/manager/category/list', component: CategoryTable },
+    { path: '/manager/category', component: CategoryForm }
 ]
 
 const privateRoutes = [
 
 ]
 
-export { publicRoutes, privateRoutes }
+export { privateRoutes, publicRoutes };
+

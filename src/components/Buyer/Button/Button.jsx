@@ -56,7 +56,7 @@ function Button({
     return (
         <Comp className={cx(classes)} {...props}>
             {leftIcon && <span className={cx('icon')}>{leftIcon}</span>}
-            <span className={cx('title')}>{children}</span>
+            {children && <span className={cx('title')}>{children}</span>}
             {rightIcon && <span className={cx('icon')}>{rightIcon}</span>}
         </Comp>
     );
@@ -69,7 +69,7 @@ Button.propTypes = {
     size: PropTypes.oneOf(['normal', 'small', 'large', 'tiny']),
     shape: PropTypes.oneOf(['rounded', 'vertical']),
     disabled: PropTypes.bool,
-    children: PropTypes.node.isRequired,
+    children: PropTypes.node,
     leftIcon: PropTypes.node,
     rightIcon: PropTypes.node,
     className: PropTypes.string,

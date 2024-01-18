@@ -11,7 +11,9 @@ const cx = classNames.bind(styles);
 const maxLengthName = 40;
 const maxLengthEmail = 100;
 
-const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const USER_REGEX = /^[A-Za-z0-9]+$/;
+// const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+
 // const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const emailRegex =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[\d.]{1,3}\.[\d.]{1,3}\.[\d.]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -100,6 +102,7 @@ const Register = () => {
                             message: 'Username can only contain letters and digits',
                         },
                         { max: maxLengthName, message: 'The length of your username is too long' },
+                        // { min: 3, message: 'The length of your username is too short' },
                     ]}
                 >
                     <Input className={cx('field')} />

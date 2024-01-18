@@ -24,10 +24,16 @@
 }
 
 .cart-content {
+    display: flex;
     cursor: pointer;
+    align-items: center;
     svg {
         width: 2rem;
         height: 2rem;
+    }
+
+    sup{
+        margin-top: 4px;
     }
 }
 
@@ -49,4 +55,16 @@
     align-items: center;
     font-size: 1.5rem;
     cursor: pointer;
+    
+    span {
+        margin-right: 2px;
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
+.actions {
+    span {
+        height: 3rem;
+    }
 }

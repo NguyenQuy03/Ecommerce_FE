@@ -9,6 +9,7 @@ import Button from '~/components/Buyer/Button';
 
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
+import { useAuth } from '~/hooks';
 const cx = classNames.bind(styles);
 const { Text } = Typography;
 
@@ -56,12 +57,11 @@ const menuItems = [
     },
 ];
 
-let isLogin = true;
-
 let orderQuantity = 9;
 
 function Header() {
     const [searchResult, setSearchResult] = useState([]);
+    const { auth } = useAuth();
 
     useEffect(() => {
         setTimeout(() => {
@@ -85,7 +85,7 @@ function Header() {
                 </Col>
 
                 <Col className={cx('actions')} sm={12} lg={6}>
-                    {isLogin ? (
+                    {auth?.fullName ? (
                         <Row justify="end" align={'middle'}>
                             <Link to={'/cart'}>
                                 <Badge
@@ -108,26 +108,27 @@ function Header() {
                                     <Text
                                         style={{
                                             width: 120,
+                                            alignItems: 'center'
                                         }}
                                         ellipsis={{
                                             tooltip: <></>,
                                         }}
                                     >
-                                        Nguyen Huy Quy
+                                        {auth.fullName}
                                     </Text>
                                     <ChevronDown />
                                 </div>
                             </Dropdown>
                         </Row>
                     ) : (
-                        <>
-                            <Button type={'outline'} to={'/login'}>
+                        <Row justify={'end'}>
+                            <Button type={'outline'} size={'normal'} to={'/login'}>
                                 Login
                             </Button>
-                            <Button type={'primary'} to={'/register'}>
+                            <Button type={'primary'} size={'normal'} to={'/register'}>
                                 Sign up
                             </Button>
-                        </>
+                        </Row>
                     )}
                 </Col>
             </Row>

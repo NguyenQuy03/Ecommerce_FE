@@ -28,14 +28,14 @@ const Login = () => {
     const location = useLocation();
 
     const [api, contextHolder] = notification.useNotification();
-    const usernameRef = useRef();
+    const usernameRef = useRef(null);
 
     const from = location.state?.from?.pathname || '/';
 
     const [respData, setRespData] = useState(location.state);
 
     const openNotification = useCallback((placement, status, message) => {
-        api[status]({
+        api[status || 'success']({
             message: message,
             placement: placement,
             className: cx('noti', `${status}`),
@@ -51,7 +51,7 @@ const Login = () => {
     }, [respData, openNotification]);
 
     useEffect(() => {
-        usernameRef.current.focus();
+        usernameRef.current.focus();    
     }, []);
 
     const onFinish = (formData) => {
@@ -59,7 +59,10 @@ const Login = () => {
             .then((response) => {
                 const accessToken = response?.data?.accessToken;
                 const roles = response?.data?.roles;
-                setAuth({ roles, accessToken });
+                const fullName = response?.data?.fullName;
+
+                setAuth({ roles, accessToken, fullName });
+                console.log(response);
 
                 Cookies.set('access_token', accessToken, { expires: 1 / 24 / 10 });
                 navigate(from, {
@@ -67,7 +70,8 @@ const Login = () => {
                 });
             })
             .catch((error) => {
-                setRespData({ message: error.response.data, status: 'error' });
+                console.log(error);
+                setRespData({ message: error.response?.data, status: 'error' });
             });
     };
 
@@ -83,10 +87,11 @@ const Login = () => {
             <Form
                 className={cx('body')}
                 {...formLayout}
-                name="basic"
+                requiredMark={false}
+                name="form-login"
                 initialValues={{ remember: true }}
                 autoComplete="off"
-                layout="vertical"
+                layout="vertical"        
                 onFinish={onFinish}
             >
                 <Form.Item

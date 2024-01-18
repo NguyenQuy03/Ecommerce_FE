@@ -11,6 +11,7 @@
     background-color: var(--white);
     border: 1px solid transparent;
     user-select: none;
+    -webkit-user-select: none;
 
     + .wrapper {
         margin-left: 16px;
@@ -103,7 +104,7 @@
 
 .small {
     min-width: 52px;
-    padding: 2px 16px;
+    padding: 2px 14px;
 }
 
 .large {
