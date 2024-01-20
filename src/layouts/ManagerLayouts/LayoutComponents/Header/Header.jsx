@@ -31,9 +31,9 @@ function Header() {
         <AntHeader className={cx('wrapper')}>
             <Row className={cx('inner')} justify="space-between" align="middle">
                 <Col sm={12} lg={6}>
-                    <a href="#">
-                        <p>Dashboard</p>
-                    </a>
+                    <Link to="/manager">
+                        <p style={{marginLeft: '60px'}}>Dashboard</p>
+                    </Link>
                 </Col>
 
                 <Col className={cx('actions')} sm={12} lg={6}>

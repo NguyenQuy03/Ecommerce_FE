@@ -1,7 +1,7 @@
 import { Col, FloatButton, Row } from 'antd';
 
-import { BannerItem, Carousel } from '~/components/Buyer/Carousel';
-import { WrapperComponent } from '~/components/Buyer/Wrapper';
+import { BannerItem, Carousel } from '~/components/Carousel';
+import { WrapperComponent } from '~/components/Wrapper';
 import { Footer, Header } from '~/layouts/BuyerLayouts/LayoutComponents';
 
 import images from '~/assets/images';

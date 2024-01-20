@@ -3,7 +3,7 @@ import { Footer, Header } from '~/layouts/BuyerLayouts/LayoutComponents';
 import { Link } from 'react-router-dom';
 import { Bell, Person, Receipt } from 'react-bootstrap-icons';
 
-import { WrapperComponent } from '~/components/Buyer/Wrapper';
+import { WrapperComponent } from '~/components/Wrapper';
 import * as BuyerRouteConstant from "~/constants/buyerRouteConstant";
 
 function getItem(label, key, icon, children, type) {

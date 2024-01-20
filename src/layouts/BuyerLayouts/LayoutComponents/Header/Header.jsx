@@ -78,7 +78,7 @@ function Header() {
                     </Link>
                 </Col>
 
-                <Col lg={12} sm={24} style={{ display: 'flex' }}>
+                <Col lg={12} sm={24} style={{ display: 'flex'}}>
                     <AutoComplete className={cx('search')} options={options} allowClear>
                         <Input.Search size="large" placeholder="Search for products" />
                     </AutoComplete>

@@ -6,10 +6,10 @@ import { CartPlus, ChatSquareText, ShopWindow } from 'react-bootstrap-icons';
 
 import { getProduct, getProducts } from '~/services/ProductService';
 
-import Button from '~/components/Buyer/Button';
-import { BannerItem, CardProductItem, Carousel } from '~/components/Buyer/Carousel';
-import { RcmProducts } from '~/components/Buyer/Grid';
-import { WrapperComponent, WrapperContent } from '~/components/Buyer/Wrapper';
+import Button from '~/components/Button';
+import { BannerItem, CardProductItem, Carousel } from '~/components/Carousel';
+import { RcmProducts } from '~/components/Grid';
+import { WrapperComponent, WrapperContent } from '~/components/Wrapper';
 
 import classNames from 'classnames/bind';
 import styles from './DetailProduct.module.scss';

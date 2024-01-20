@@ -3,7 +3,7 @@ import * as httpRequest from '~/utils/httpRequest';
 const PRODUCT_URL = '/v1/buyer/product';
 const PRODUCT_RECOMMEND_URL = PRODUCT_URL + '/recommend';
 const PRODUCT_RECOMMEND__BY_SELLER_URL = PRODUCT_RECOMMEND_URL + '/seller';
-const PRODUCT_RECOMMEND__BY_CATEGORY_URL = PRODUCT_RECOMMEND_URL + '/category';
+// const PRODUCT_RECOMMEND_BY_CATEGORY_URL = PRODUCT_RECOMMEND_URL + '/category';
 const PRODUCT_DETAIL_URL = '/v1/buyer/product/detail';
 
 export const getProducts = async () => {

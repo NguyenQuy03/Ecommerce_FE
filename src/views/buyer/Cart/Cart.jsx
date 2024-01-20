@@ -1,14 +1,12 @@
 import { Affix, Col, Row, Table } from 'antd';
 import { useEffect, useState } from 'react';
 
-import Button from '~/components/Buyer/Button';
-import Grid from '~/components/Buyer/Grid';
-import { CardProductItem } from '~/components/Buyer/Carousel';
-import { RcmProducts } from '~/components/Buyer/Grid';
+import Button from '~/components/Button';
+import { RcmProducts } from '~/components/Grid';
 import { getProducts } from '~/services/ProductService';
 
 import classNames from 'classnames/bind';
-import { WrapperComponent, WrapperContent } from '~/components/Buyer/Wrapper';
+import { WrapperComponent, WrapperContent } from '~/components/Wrapper';
 import styles from './Cart.module.scss';
 const cx = classNames.bind(styles);
 
@@ -73,7 +71,7 @@ const Cart = () => {
         selectedRowKeys,
         onChange: onSelectChange,
     };
-    const hasSelected = selectedRowKeys.length > 0;
+    // const hasSelected = selectedRowKeys.length > 0;
 
     return (
         <>

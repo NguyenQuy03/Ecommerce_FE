@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
-import Button from '~/components/Buyer/Button';
-import { WrapperComponent } from '~/components/Buyer/Wrapper';
+import Button from '~/components/Button';
+import { WrapperComponent } from '~/components/Wrapper';
 
-import TitleSection from '~/components/Buyer/TitleSection';
+import TitleSection from '~/components/TitleSection';
 
 import { getCategories } from '~/services/CategoryService';
 import { getProducts } from '~/services/ProductService';
 
-import { Carousel, CardCategoryItem, CardProductItem } from '~/components/Buyer/Carousel';
+import { Carousel, CardCategoryItem, CardProductItem } from '~/components/Carousel';
 
 import classNames from 'classnames/bind';
 import styles from './Home.module.scss';

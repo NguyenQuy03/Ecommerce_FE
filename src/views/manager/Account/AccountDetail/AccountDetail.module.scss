@@ -1,0 +1,25 @@
+
+
+.header-title {
+    font-size: 2.2rem;
+    font-weight: 500;
+}
+
+.detail-info {
+    background-color: var(--secondary);
+    padding: 10px;
+    border-radius: 4px;
+    margin: 16px 0;
+
+    .header-form {
+        font-weight: 500;
+        margin-bottom: 12px;
+    }
+}
+
+.update-btn {
+    svg {
+        width: 1.6rem;
+        height: 1.6rem;
+    }
+}

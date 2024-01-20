@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: center;
     min-width: 100px;
-    min-height: 36px;
+    min-height: 34px;
     font-size: 1.7rem;
     font-weight: 400;
     border-radius: 4px;
@@ -28,14 +28,14 @@
 }
 
 .icon + .title , .title + .icon {
-    margin-left: 10px;
+    margin-left: 4px;
 }
 
 .icon {
+    display: flex;
     svg {
         height: 20px;
         width: 20px;
-        margin-top: 1px;
     }
 }
 
@@ -103,8 +103,8 @@
 }
 
 .small {
-    min-width: 52px;
-    padding: 2px 14px;
+    min-width: 48px;
+    padding: 2px 10px;
 }
 
 .large {

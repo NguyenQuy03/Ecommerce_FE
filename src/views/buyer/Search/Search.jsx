@@ -1,10 +1,10 @@
 import { Col, Divider, List, Rate, Row, Slider, Select, Flex } from 'antd';
 import { useEffect, useState } from 'react';
 import { Funnel } from 'react-bootstrap-icons';
-import Button from '~/components/Buyer/Button';
+import Button from '~/components/Button';
 
-import { CardProductItem } from '~/components/Buyer/Carousel';
-import { WrapperComponent } from '~/components/Buyer/Wrapper';
+import { CardProductItem } from '~/components/Carousel';
+import { WrapperComponent } from '~/components/Wrapper';
 import { getProducts } from '~/services/ProductService';
 
 import classNames from 'classnames/bind';

@@ -1,6 +1,6 @@
 import { Col, Divider, Form, Radio, Row } from 'antd';
 import { useEffect, useState } from 'react';
-import { WrapperContent } from '~/components/Buyer/Wrapper';
+import { WrapperContent } from '~/components/Wrapper';
 
 import { Select } from 'antd';
 import Button from '~/components/Buyer/Button';

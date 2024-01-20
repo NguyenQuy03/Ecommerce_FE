@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 
 import classNames from 'classnames/bind';
 import styles from '../Button/Button.module.scss';
-
 const cx = classNames.bind(styles);
 
 function Button({
@@ -47,10 +46,10 @@ function Button({
 
     const classes = cx('wrapper', {
         [className]: className,
-        disabled,
         [size]: size,
         [type]: type,
         [shape]: shape,
+        disabled,
     });
 
     return (

@@ -1,8 +1,8 @@
 import { Row } from 'antd';
 
 import { CardProductItem } from '../Carousel';
-import { WrapperComponent, WrapperContent } from '../Wrapper';
-import Grid from './Grid';
+import { WrapperComponent, WrapperContent } from '~/components/Wrapper';
+import Grid from '~/components/Grid/Grid';
 
 import classNames from 'classnames/bind';
 import styles from './RcmProducts.module.scss';

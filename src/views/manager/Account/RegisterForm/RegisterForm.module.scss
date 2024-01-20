@@ -1,0 +1,26 @@
+
+.content {
+    height: 100%;
+    width: 100%;
+}
+
+.title {
+    font-size: 2.4rem;
+    font-weight: 500;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    margin-top: 16px;
+
+    .field {
+        height: 34px;
+    }
+
+    .submit-btn {
+        padding: 8px 16px;
+    }
+}

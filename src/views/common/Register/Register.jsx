@@ -79,9 +79,9 @@ const Register = () => {
                 autoComplete="off"
                 layout="vertical"
                 onFinish={onFinish}
+                colon={false}
             >
                 <Form.Item
-                    labelAlign="left"
                     label="Full name"
                     name="fullName"
                     rules={[
@@ -92,7 +92,6 @@ const Register = () => {
                     <Input className={cx('field')} />
                 </Form.Item>
                 <Form.Item
-                    labelAlign="left"
                     label="Username"
                     name="username"
                     rules={[

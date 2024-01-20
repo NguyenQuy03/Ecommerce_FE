@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { cloneElement, useRef } from 'react';
 import { ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
 
-import Button from '~/components/Buyer/Button';
+import Button from '~/components/Button';
 import BannerItem from './BannerItem';
 import CardCategoryItem from './CardCategoryItem';
 import CardProductItem from './CardProductItem';
