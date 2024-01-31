@@ -1,7 +1,8 @@
 import React from 'react';
 import { Space, Table, Tooltip } from 'antd';
 import { PencilSquare, XSquare } from 'react-bootstrap-icons';
-import Button from '~/components/Buyer/Button';
+import Button from '~/components/Button';
+import { Content } from '~/layouts/ManagerLayouts/LayoutComponents';
 const columns = [
     {
         title: 'Name',
@@ -55,7 +56,7 @@ const data = [
     },
 ];
 const CategoryTable = () => (
-    <div>
+    <Content>
         <Table
             columns={columns}
             dataSource={data}
@@ -67,6 +68,6 @@ const CategoryTable = () => (
                 defaultCurrent: 1,
             }}
         />
-    </div>
+    </Content>
 );
 export default CategoryTable;

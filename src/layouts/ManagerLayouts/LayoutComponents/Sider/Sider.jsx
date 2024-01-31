@@ -1,6 +1,6 @@
 import { Layout, Menu } from 'antd';
 import { useState } from 'react';
-import { ArrowLeftRight, CardList, Person, ReceiptCutoff, List, FilterLeft } from 'react-bootstrap-icons';
+import { ArrowLeftRight, CardList, Person, ReceiptCutoff, List, FilterLeft, Box2Heart } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 
 import Button from '~/components/Button';
@@ -8,33 +8,42 @@ const { Sider: AntSider } = Layout;
 
 const items = [
     {
-        key: 'acc',
+        key: 'transaction',
+        icon: <ArrowLeftRight />,
+        label: <Link to={'/manager/transaction/list'}>Transactions</Link>,
+    },
+    {
+        key: 'order',
+        icon: <ReceiptCutoff />,
+        label: <Link to={'/manager/order/list'}>Orders</Link>,
+    },
+    {
+        key: 'account',
         icon: <Person />,
         label: 'Account',
         children: [
             { key: 'acc1', label: <Link to={'/manager/account/seller/list'}>Seller Accounts</Link> },
             { key: 'acc2', label: <Link to={'/manager/account/buyer/list'}>Buyer Accounts</Link> },
-            { key: 'acc3', label: <Link to={'/manager/account'}>Add New Account</Link> },
+            { key: 'acc3', label: <Link to={'/manager/account'}>Add Account</Link> },
         ],
     },
     {
-        key: 'sub2',
+        key: 'category',
         icon: <CardList />,
         label: 'Categories',
         children: [
             { key: 'cat1', label: <Link to={'/manager/category/list'}>Category List</Link> },
-            { key: 'cat2', label: <Link to={'/manager/category'}>Add New Category</Link> },
+            { key: 'cat2', label: <Link to={'/manager/category'}>Add Category</Link> },
         ],
     },
     {
-        key: 'sub3',
-        icon: <ArrowLeftRight />,
-        label: 'Transactions',
-    },
-    {
-        key: 'sub4',
-        icon: <ReceiptCutoff />,
-        label: <Link to={'/manager/order/list'}>Orders</Link>,
+        key: 'product',
+        icon: <Box2Heart />,
+        label: 'Products',
+        children: [
+            { key: 'pro1', label: <Link to={'/manager/product/list'}>Product List</Link> },
+            { key: 'pro2', label: <Link to={'/manager/product'}>Add Product</Link> },
+        ],
     },
 ];
 
@@ -55,7 +64,7 @@ function Sider() {
                     marginBottom: 16,
                     position: 'absolute',
                     top: '14px',
-                    left: '10px'
+                    left: '10px',
                 }}
             ></Button>
 

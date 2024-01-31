@@ -1,34 +1,25 @@
-import { Dropdown, Space, Table } from 'antd';
-import { ThreeDots, FunnelFill } from 'react-bootstrap-icons';
+import { Dropdown, Space, Table, Tabs, Select, Popconfirm } from 'antd';
+import { Plus, ThreeDots, FunnelFill } from 'react-bootstrap-icons';
 
 import { useState } from 'react';
-import { Plus } from 'react-bootstrap-icons';
 
-import { Flex, Popconfirm, Select } from 'antd';
+import { Flex } from 'antd';
 import Button from '~/components/Button';
 
 import { Content } from '~/layouts/ManagerLayouts/LayoutComponents';
 
 import classNames from 'classnames/bind';
-import styles from './OrderTable.module.scss';
+import styles from './ProductTable.module.scss';
 const cx = classNames.bind(styles);
 
 const actionItems = [
     {
-        key: 'complete',
-        label: 'Complete',
+        key: 'edit',
+        label: 'Edit',
     },
     {
-        key: 'processing',
-        label: 'Processing',
-    },
-    {
-        key: 'onHold',
-        label: 'On Hold',
-    },
-    {
-        key: 'pending',
-        label: 'Pending',
+        key: 'copy',
+        label: 'Copy',
     },
     {
         key: 'delete',
@@ -37,44 +28,45 @@ const actionItems = [
     },
 ];
 
-const OrderTable = () => {
+const ProductTable = () => {
     const expandedRowRender = () => {
         const columns = [
             {
-                title: 'Product',
-                dataIndex: 'product',
-                key: 'product',
+                title: 'SKU',
+                dataIndex: 'sku',
+                key: 'sku',
             },
             {
-                title: 'Quantity',
-                dataIndex: 'quantity',
-                key: 'quantity',
+                title: 'Variations',
+                dataIndex: 'variations',
+                key: 'variations',
             },
             {
-                title: 'Unit Amount',
-                dataIndex: 'unitAmount',
-                key: 'unitAmount',
+                title: 'Price',
+                dataIndex: 'price',
+                key: 'price',
             },
             {
-                title: 'Sub Amount',
-                dataIndex: 'subAmount',
-                key: 'subAmount',
+                title: 'Stock',
+                dataIndex: 'stock',
+                key: 'stock',
             },
             {
-                title: 'Action',
-                dataIndex: 'operation',
-                key: 'operation',
-                render: () => <div>Delete</div>,
+                title: 'Sold',
+                dataIndex: 'sold',
+                key: 'sold',
             },
         ];
+
         const data = [];
         for (let i = 0; i < 3; ++i) {
             data.push({
                 key: i.toString(),
-                product: 'Platinum web hosting package9',
-                quantity: '2',
-                unitAmount: '15',
-                subAmount: '30',
+                sku: 'Platinum web hosting package9',
+                variations: '2',
+                price: '15',
+                stock: '30',
+                sold: '30',
             });
         }
         return <Table columns={columns} dataSource={data} pagination={false} />;
@@ -82,61 +74,50 @@ const OrderTable = () => {
 
     const columns = [
         {
-            title: 'Order',
-            dataIndex: 'order',
-            key: 'order',
-            sorter: (a, b) => a.order - b.order,
+            title: 'Product',
+            dataIndex: 'product',
+            key: 'product',
+            sorter: (a, b) => a.product - b.product,
         },
         {
-            title: 'Date',
-            dataIndex: 'modifiedDate',
-            key: 'modifiedDate',
+            title: 'Total Stock',
+            dataIndex: 'totalStock',
+            key: 'totalStock',
         },
         {
-            title: 'Ship To',
-            dataIndex: 'shipTo',
-            key: 'shipTo',
-        },
-        {
-            title: 'Status',
-            dataIndex: 'status',
-            key: 'status',
-        },
-        {
-            title: 'Amount',
-            dataIndex: 'amount',
-            key: 'amount',
+            title: 'Total Sold',
+            dataIndex: 'totalSold',
+            key: 'totalSold',
         },
         {
             title: '',
             dataIndex: 'action',
             render: () => (
-                <Space size="middle">
-                    <Dropdown
-                        menu={{
-                            items: actionItems,
-                        }}
-                    >
-                        <ThreeDots />
-                    </Dropdown>
-                </Space>
+                <Dropdown
+                    menu={{
+                        items: actionItems,
+                    }}
+                    trigger={['click']}
+                    className={cx('drop-down')}
+                >
+                    <ThreeDots />
+                </Dropdown>
             ),
         },
     ];
+
     const data = [];
     for (let i = 0; i < 3; ++i) {
         data.push({
             key: i.toString(),
-            order: (
+            product: (
                 <>
                     <p>#201 by Miles Haley </p>
                     <p>haley@example.com</p>
                 </>
             ),
-            modifiedDate: '2014-12-24 23:12:00',
-            shipTo: 'iOS',
-            status: 'Complete',
-            amount: '100',
+            totalStock: '100',
+            totalSold: '200',
         });
     }
 
@@ -165,25 +146,19 @@ const OrderTable = () => {
     const renderTitle = () => {
         return (
             <Flex justify="space-between">
-                <h1 className={cx('title')}>Orders</h1>
+                <h1 className={cx('title')}>3 Products</h1>
                 {!hasSelected ? (
                     <Flex>
                         <Button
                             to={'/manager/account'}
                             size={'small'}
-                            type={'outline'}
+                            type={'primary'}
                             leftIcon={<Plus />}
                             className={cx('btn')}
-                            disabled
                         >
-                            New
+                            Add New Product
                         </Button>
-                        <Button
-                            size={'small'}
-                            type={'outline'}
-                            leftIcon={<FunnelFill />}
-                            className={cx('btn')}
-                        >
+                        <Button size={'small'} type={'outline'} leftIcon={<FunnelFill />} className={cx('btn')}>
                             Filter
                         </Button>
                     </Flex>
@@ -195,10 +170,6 @@ const OrderTable = () => {
                             }}
                             placeholder="Bulk Actions"
                             options={[
-                                {
-                                    value: 'refund',
-                                    label: 'Refund',
-                                },
                                 {
                                     value: 'delete',
                                     label: 'Delete',
@@ -226,9 +197,28 @@ const OrderTable = () => {
             </Flex>
         );
     };
+    const tabs = [
+        {
+            key: 'all',
+            label: 'All',
+        },
+        {
+            key: 'live',
+            label: 'Live',
+        },
+        {
+            key: 'soldout',
+            label: 'Sold Out',
+        },
+    ];
+
+    const handleTab = (tab) => {
+        console.log(tab);
+    };
 
     return (
         <Content>
+            <Tabs defaultActiveKey="all" type="card" items={tabs} size="middle" onChange={(tab) => handleTab(tab)} />
             <Table
                 columns={columns}
                 expandable={{
@@ -239,8 +229,9 @@ const OrderTable = () => {
                 size="middle"
                 title={renderTitle}
                 rowSelection={rowSelection}
+                bordered
             />
         </Content>
     );
 };
-export default OrderTable;
+export default ProductTable;

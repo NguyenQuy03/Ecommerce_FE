@@ -10,3 +10,8 @@ export { default as CategoryForm } from "./Category/CategoryForm"
 
 export { default as OrderTable } from "./Order/OrderTable/OrderTable"
 export { default as OrderDetail } from "./Order/OrderDetail/OrderDetail"
+
+export { default as ProductTable } from "./Product/ProductTable/ProductTable"
+export { default as ProductForm } from "./Product/ProductForm/ProductForm"
+
+export { default as TransactionTable } from "./Transaction/TransactionTable/TransactionTable"

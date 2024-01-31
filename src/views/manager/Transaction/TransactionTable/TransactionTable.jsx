@@ -1,5 +1,5 @@
 import { Dropdown, Space, Table } from 'antd';
-import { ThreeDots, FunnelFill } from 'react-bootstrap-icons';
+import { FunnelFill, ThreeDots } from 'react-bootstrap-icons';
 
 import { useState } from 'react';
 import { Plus } from 'react-bootstrap-icons';
@@ -10,7 +10,7 @@ import Button from '~/components/Button';
 import { Content } from '~/layouts/ManagerLayouts/LayoutComponents';
 
 import classNames from 'classnames/bind';
-import styles from './OrderTable.module.scss';
+import styles from './TransactionTable.module.scss';
 const cx = classNames.bind(styles);
 
 const actionItems = [
@@ -37,65 +37,66 @@ const actionItems = [
     },
 ];
 
-const OrderTable = () => {
+const TransactionTable = () => {
     const expandedRowRender = () => {
         const columns = [
             {
-                title: 'Product',
-                dataIndex: 'product',
-                key: 'product',
+                title: 'Order',
+                dataIndex: 'order',
+                key: 'order',
             },
             {
-                title: 'Quantity',
-                dataIndex: 'quantity',
-                key: 'quantity',
+                title: 'Ship To',
+                dataIndex: 'shipTo',
+                key: 'shipTo',
             },
             {
-                title: 'Unit Amount',
-                dataIndex: 'unitAmount',
-                key: 'unitAmount',
+                title: 'Status',
+                dataIndex: 'status',
+                key: 'status',
             },
             {
-                title: 'Sub Amount',
-                dataIndex: 'subAmount',
-                key: 'subAmount',
+                title: 'Order Total',
+                dataIndex: 'orderTotal',
+                key: 'orderTotal',
             },
             {
                 title: 'Action',
-                dataIndex: 'operation',
-                key: 'operation',
-                render: () => <div>Delete</div>,
+                dataIndex: 'action',
+                key: 'action',
+                render: () => <div>Refund</div>,
             },
         ];
+
         const data = [];
         for (let i = 0; i < 3; ++i) {
             data.push({
                 key: i.toString(),
-                product: 'Platinum web hosting package9',
-                quantity: '2',
-                unitAmount: '15',
-                subAmount: '30',
+                order: 'Platinum web hosting package9',
+                shipTo: '2',
+                status: '15',
+                orderTotal: '30',
             });
         }
-        return <Table columns={columns} dataSource={data} pagination={false} />;
+        return <Table columns={columns} dataSource={data} pagination={false} size="large" />;
     };
 
     const columns = [
         {
-            title: 'Order',
-            dataIndex: 'order',
-            key: 'order',
+            title: 'Buyer',
+            dataIndex: 'buyer',
+            key: 'buyer',
             sorter: (a, b) => a.order - b.order,
         },
         {
-            title: 'Date',
-            dataIndex: 'modifiedDate',
-            key: 'modifiedDate',
+            title: 'Seller',
+            dataIndex: 'seller',
+            key: 'seller',
         },
         {
-            title: 'Ship To',
-            dataIndex: 'shipTo',
-            key: 'shipTo',
+            title: 'Product',
+            dataIndex: 'product',
+            key: 'product',
         },
         {
             title: 'Status',
@@ -103,9 +104,9 @@ const OrderTable = () => {
             key: 'status',
         },
         {
-            title: 'Amount',
-            dataIndex: 'amount',
-            key: 'amount',
+            title: 'Total Payment',
+            dataIndex: 'totalPayment',
+            key: 'totalPayment',
         },
         {
             title: '',
@@ -127,16 +128,11 @@ const OrderTable = () => {
     for (let i = 0; i < 3; ++i) {
         data.push({
             key: i.toString(),
-            order: (
-                <>
-                    <p>#201 by Miles Haley </p>
-                    <p>haley@example.com</p>
-                </>
-            ),
-            modifiedDate: '2014-12-24 23:12:00',
-            shipTo: 'iOS',
+            buyer: <p>#201 by Miles Haley </p>,
+            seller: <p>haley@example.com</p>,
+            product: 'iOS',
             status: 'Complete',
-            amount: '100',
+            totalPayment: '100',
         });
     }
 
@@ -164,8 +160,8 @@ const OrderTable = () => {
 
     const renderTitle = () => {
         return (
-            <Flex justify="space-between">
-                <h1 className={cx('title')}>Orders</h1>
+            <Flex justify="space-between" style={{ marginTop: '-12px' }}>
+                <h1 className={cx('title')}>Recent Purchases</h1>
                 {!hasSelected ? (
                     <Flex>
                         <Button
@@ -178,12 +174,7 @@ const OrderTable = () => {
                         >
                             New
                         </Button>
-                        <Button
-                            size={'small'}
-                            type={'outline'}
-                            leftIcon={<FunnelFill />}
-                            className={cx('btn')}
-                        >
+                        <Button size={'small'} type={'outline'} leftIcon={<FunnelFill />} className={cx('btn')}>
                             Filter
                         </Button>
                     </Flex>
@@ -228,19 +219,21 @@ const OrderTable = () => {
     };
 
     return (
-        <Content>
-            <Table
-                columns={columns}
-                expandable={{
-                    expandedRowRender,
-                    defaultExpandedRowKeys: ['0'],
-                }}
-                dataSource={data}
-                size="middle"
-                title={renderTitle}
-                rowSelection={rowSelection}
-            />
-        </Content>
+        <>
+            <Content>
+                <Table
+                    columns={columns}
+                    expandable={{
+                        expandedRowRender,
+                        defaultExpandedRowKeys: ['0'],
+                    }}
+                    dataSource={data}
+                    size="middle"
+                    title={renderTitle}
+                    rowSelection={rowSelection}
+                />
+            </Content>
+        </>
     );
 };
-export default OrderTable;
+export default TransactionTable;

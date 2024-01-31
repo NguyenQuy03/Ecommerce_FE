@@ -1,7 +1,7 @@
 import { Flex, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 
-import Button from '~/components/Buyer/Button';
+import Button from '~/components/Button';
 import { register } from '~/services/AuthService';
 
 import classNames from 'classnames/bind';

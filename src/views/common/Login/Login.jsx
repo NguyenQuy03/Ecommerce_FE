@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import Button from '~/components/Buyer/Button';
+import Button from '~/components/Button';
 import { login } from '~/services/AuthService';
 import { useAuth } from '~/hooks';
 

@@ -6,6 +6,7 @@ import Button from '~/components/Button';
 
 import classNames from 'classnames/bind';
 import styles from './AccountTable.module.scss';
+import { Content } from '~/layouts/ManagerLayouts/LayoutComponents';
 const cx = classNames.bind(styles);
 
 const data = [
@@ -133,7 +134,13 @@ const AccountTable = () => {
             <Flex justify="space-between">
                 <h1 className={cx('title')}>Buyers</h1>
                 {!hasSelected ? (
-                    <Button to={"/manager/account"} size={'small'} type={'outline'} leftIcon={<Plus />} className={cx('add-btn')}>
+                    <Button
+                        to={'/manager/account'}
+                        size={'small'}
+                        type={'outline'}
+                        leftIcon={<Plus />}
+                        className={cx('add-btn')}
+                    >
                         New
                     </Button>
                 ) : (
@@ -152,7 +159,7 @@ const AccountTable = () => {
                             onChange={(value) => {
                                 setBulkAcionValue(value);
                                 console.log('selected value:', value);
-                              }}
+                            }}
                         />
                         <Popconfirm
                             title="Delete the task"
@@ -202,6 +209,10 @@ const AccountTable = () => {
             ...getColumnSearchProps('address'),
         },
     ];
-    return <Table rowSelection={rowSelection} columns={columns} dataSource={data} title={renderTitle} />;
+    return (
+        <Content>
+            <Table rowSelection={rowSelection} columns={columns} dataSource={data} title={renderTitle} />
+        </Content>
+    );
 };
 export default AccountTable;

@@ -5,7 +5,7 @@ import { Cart, ChevronDown } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
 
 import images from '~/assets/images';
-import Button from '~/components/Buyer/Button';
+import Button from '~/components/Button';
 
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';

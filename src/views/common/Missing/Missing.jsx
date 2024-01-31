@@ -1,6 +1,6 @@
 import { Result } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import Button from '~/components/Buyer/Button';
+import Button from '~/components/Button';
 
 function Missing() {
     const navigate  = useNavigate();

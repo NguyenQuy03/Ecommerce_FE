@@ -1,13 +1,14 @@
-import { Col, Divider, Flex, Form, Input, Row, Select, Switch, InputNumber, Popconfirm } from 'antd';
+import { Col, Divider, Flex, Form, Input, Popconfirm, Row, Select, Switch } from 'antd';
 import { useState } from 'react';
-import { PersonFill, PencilFill, CheckLg, XLg } from 'react-bootstrap-icons';
+import { CheckLg, PencilFill, PersonFill, XLg } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 
-import Button from '~/components/Buyer/Button';
+import Button from '~/components/Button';
 import { register } from '~/services/AuthService';
 
 import classNames from 'classnames/bind';
 import styles from './AccountDetail.module.scss';
+import { Content } from '~/layouts/ManagerLayouts/LayoutComponents';
 const cx = classNames.bind(styles);
 
 const maxLengthName = 40;
@@ -96,8 +97,8 @@ function AccountDetail() {
     };
 
     return (
-        <div>
-            <Flex vertical>
+        <>
+            <Content>
                 <Flex justify="space-between">
                     <h1 className={cx('header-title')}>Tony Robbins</h1>
                     <Flex align="center" gap={6} className={cx('header-title')}>
@@ -109,9 +110,8 @@ function AccountDetail() {
                     <p>Customer was created</p>
                     <p>Jan 12, 11:13 PM</p>
                 </div>
-            </Flex>
-            <Divider />
-            <Flex vertical>
+            </Content>
+            <Content>
                 <Flex justify="space-between">
                     <h1 className={cx('header-title')}>Details</h1>
                     <Button
@@ -267,8 +267,8 @@ function AccountDetail() {
                         <div></div>
                     )}
                 </Flex>
-            </Flex>
-        </div>
+            </Content>
+        </>
     );
 }
 

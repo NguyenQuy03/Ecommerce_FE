@@ -1,7 +1,8 @@
 import { Form, Input, Modal, Upload, message, Flex } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import { useState } from 'react';
-import Button from '~/components/Buyer/Button';
+import Button from '~/components/Button';
+import { Content } from '~/layouts/ManagerLayouts/LayoutComponents';
 
 const getBase64 = (file) =>
     new Promise((resolve, reject) => {
@@ -77,7 +78,7 @@ const CategoryForm = () => {
     };
 
     return (
-        <div>
+        <Content>
             <Flex>
                 <p style={{ fontSize: '2.4rem', fontWeight: 500 }}>BASIC INFORMATION</p>
             </Flex>
@@ -162,7 +163,7 @@ const CategoryForm = () => {
                     />
                 </Modal>
             </Form>
-        </div>
+        </Content>
     );
 };
 export default CategoryForm;

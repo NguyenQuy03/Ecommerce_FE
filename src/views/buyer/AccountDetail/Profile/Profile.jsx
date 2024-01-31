@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { WrapperContent } from '~/components/Wrapper';
 
 import { Select } from 'antd';
-import Button from '~/components/Buyer/Button';
+import Button from '~/components/Button';
 
 const { Option } = Select;
 
