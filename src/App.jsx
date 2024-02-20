@@ -1,31 +1,51 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import RequireAuth from './utils/RequireAuth';
 import { LayoutDefault } from '~/layouts/BuyerLayouts';
+import { privateRoutes as BuyerPrivateRoutes, publicRoutes as BuyerPublicRoutes } from '~/routes/buyer';
+import { publicRoutes as CommonPublicRoutes } from '~/routes/common';
 import { LayoutBlank } from './layouts/CommonLayouts';
 import { DashboardLayout } from './layouts/ManagerLayouts';
-import { publicRoutes as BuyerPublicRoutes } from '~/routes/buyer';
-import { publicRoutes as CommonPublicRoutes } from '~/routes/common';
+import { PersistLogin, RequireAuth } from './utils';
 
 import { publicRoutes as ManagerPublicRoutes } from '~/routes/manager';
+import { publicRoutes as SellerRoutes } from '~/routes/seller';
 
-const buyerRoutes = [...BuyerPublicRoutes];
-const commonRoutes = [...CommonPublicRoutes];
+
+const buyerRoutes = [...BuyerPrivateRoutes];
+const commonRoutes = [...CommonPublicRoutes, ...BuyerPublicRoutes];
 
 const managerRoutes = [...ManagerPublicRoutes];
+const sellerRoutes = [...SellerRoutes];
 
 const ROLES = {
-    Buyer: 'ROLE_20001',
-    Seller: 'ROLE_20002',
-    Manager: 'ROLE_20003',
+    Manager: 'ROLE_20001',
+    Buyer: 'ROLE_20002',
+    Seller: 'ROLE_20003',
 };
 
 function App() {
     return (
         <BrowserRouter>
-            <div className="App">
-                <Routes>
-                    <Route path="/" element={<RequireAuth allowedRoles={[ROLES.Buyer]} />}>
+            <Routes>
+                {commonRoutes.map((route, index) => {
+                    let Layout = route.layout || LayoutBlank;
+                    let Page = route.component;
+
+                    return (
+                        <Route
+                            key={index}
+                            path={route.path}
+                            element={
+                                <Layout>
+                                    <Page />
+                                </Layout>
+                            }
+                        />
+                    );
+                })}
+
+                <Route element={<PersistLogin />}>
+                    <Route path="/" element={<RequireAuth allowedRoles={[ROLES.Buyer, ROLES.Seller, ROLES.Manager]} />}>
                         {buyerRoutes.map((route, index) => {
                             let Layout = route.layout || LayoutDefault;
                             let Page = route.component;
@@ -44,41 +64,46 @@ function App() {
                         })}
                     </Route>
 
-                    {managerRoutes.map((route, index) => {
-                        let Layout = route.layout || DashboardLayout;
-                        let Page = route.component;
+                    <Route path="/manager" element={<RequireAuth allowedRoles={[ROLES.Manager]} />}>
+                        {managerRoutes.map((route, index) => {
+                            let Layout = route.layout || DashboardLayout;
+                            let Page = route.component;
 
-                        return (
-                            <Route
-                                key={index}
-                                path={route.path}
-                                element={
-                                    <Layout>
-                                        <Page />
-                                    </Layout>
-                                }
-                            />
-                        );
-                    })}
+                            return (
+                                <Route
+                                    key={index}
+                                    path={route.path}
+                                    element={
+                                        <Layout>
+                                            <Page />
+                                        </Layout>
+                                    }
+                                />
+                            );
+                        })}
+                    </Route>
 
-                    {commonRoutes.map((route, index) => {
-                        let Layout = route.layout || LayoutBlank;
-                        let Page = route.component;
+                    <Route path="/seller" element={<RequireAuth allowedRoles={[ROLES.Seller]} />}>
+                        {sellerRoutes.map((route, index) => {
+                            let Layout = route.layout || DashboardLayout;
+                            let Page = route.component;
 
-                        return (
-                            <Route
-                                key={index}
-                                path={route.path}
-                                element={
-                                    <Layout>
-                                        <Page />
-                                    </Layout>
-                                }
-                            />
-                        );
-                    })}
-                </Routes>
-            </div>
+                            return (
+                                <Route
+                                    key={index}
+                                    path={route.path}
+                                    element={
+                                        <Layout>
+                                            <Page />
+                                        </Layout>
+                                    }
+                                />
+                            );
+                        })}
+                    </Route>
+                </Route>
+
+            </Routes>
         </BrowserRouter>
     );
 }

@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { Plus, Search } from 'react-bootstrap-icons';
 
-import { Flex, Input, Popconfirm, Select, Space, Table } from 'antd';
+import { Flex, Input, Popconfirm, Select, Space, Table, Tabs } from 'antd';
 import Button from '~/components/Button';
 
 import classNames from 'classnames/bind';
@@ -209,8 +209,29 @@ const AccountTable = () => {
             ...getColumnSearchProps('address'),
         },
     ];
+
+    const tabs = [
+        {
+            key: 'all',
+            label: 'All',
+        },
+        {
+            key: 'buyer',
+            label: 'Buyer',
+        },
+        {
+            key: 'seller',
+            label: 'Seller',
+        },
+    ];
+
+    const handleTab = (tab) => {
+        console.log(tab);
+    };
     return (
         <Content>
+            <Tabs defaultActiveKey="all" type="card" items={tabs} size="middle" onChange={(tab) => handleTab(tab)} />
+
             <Table rowSelection={rowSelection} columns={columns} dataSource={data} title={renderTitle} />
         </Content>
     );

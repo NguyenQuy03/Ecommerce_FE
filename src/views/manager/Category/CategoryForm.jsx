@@ -1,8 +1,10 @@
-import { Form, Input, Modal, Upload, message, Flex } from 'antd';
+import { Flex, Form, Input, Modal, Upload, message } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import { useState } from 'react';
 import Button from '~/components/Button';
+import { useAuth } from '~/hooks';
 import { Content } from '~/layouts/ManagerLayouts/LayoutComponents';
+import CategoryService from '~/services/CategoryService';
 
 const getBase64 = (file) =>
     new Promise((resolve, reject) => {
@@ -28,17 +30,28 @@ const maxLengthCode = 10;
 const maxLengthName = 20;
 
 const CategoryForm = () => {
+    const categoryService = CategoryService();
+
     const [fileList, setFileList] = useState([]);
 
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewThumbnail, setPreviewThumbnail] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
 
+    const { auth } = useAuth();
+
     // Handle Submit Behavior
     const [form] = Form.useForm();
     const onFinish = (formData) => {
-        console.log('Sucess');
         console.log(formData);
+
+        categoryService.addCategory(formData, auth.accessToken)
+            .then((response) => {
+                console.log(response);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     };
 
     const onFinishFailed = (e) => {
@@ -64,7 +77,7 @@ const CategoryForm = () => {
 
         // Update the form with the base64 strings
         form.setFieldsValue({ thumbnail: base64Files });
-    };  
+    };
 
     const handleCancel = () => setPreviewOpen(false);
 
@@ -105,7 +118,12 @@ const CategoryForm = () => {
                         { max: maxLengthCode, message: 'The length of your code is too long' },
                     ]}
                 >
-                    <Input maxLength={maxLengthCode} showCount />
+                    <Input
+                        count={{
+                            show: true,
+                            max: maxLengthCode,
+                        }}
+                    />
                 </Form.Item>
 
                 <Form.Item
@@ -116,7 +134,12 @@ const CategoryForm = () => {
                         { max: maxLengthName, message: 'The length of your name is too long' },
                     ]}
                 >
-                    <Input maxLength={maxLengthName} showCount />
+                    <Input
+                        count={{
+                            show: true,
+                            max: maxLengthName,
+                        }}
+                    />
                 </Form.Item>
 
                 <Form.Item

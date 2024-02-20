@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Col, Divider, InputNumber, Radio, Rate, Row, Space } from 'antd';
 import { CartPlus, ChatSquareText, ShopWindow } from 'react-bootstrap-icons';
 
-import { getProduct, getProducts } from '~/services/ProductService';
+import ProductService from '~/services/ProductService';
 
 import Button from '~/components/Button';
 import { BannerItem, CardProductItem, Carousel } from '~/components/Carousel';
@@ -16,6 +16,8 @@ import styles from './DetailProduct.module.scss';
 const cx = classNames.bind(styles);
 
 function DetailProduct() {
+    const productService = ProductService();
+
     const { id } = useParams();
     const [product, setProduct] = useState(null);
     const [specification, setSpecification] = useState({});
@@ -24,7 +26,12 @@ function DetailProduct() {
     // const [relevantProducts, setRelevantProducts] = useState([]);
 
     useEffect(() => {
-        getProduct({ id })
+        window.scrollTo(0, 0);
+    }, [id]);
+
+    useEffect(() => {
+        productService
+            .getProduct({ id })
             .then((response) => {
                 setProduct(response);
 
@@ -41,7 +48,8 @@ function DetailProduct() {
         //         console.log(response);
         //     })
         //     .catch((error) => console.error('Error fetching data:', error));
-        getProducts()
+        productService
+            .getProducts()
             .then((response) => {
                 setShopProducts(response);
             })

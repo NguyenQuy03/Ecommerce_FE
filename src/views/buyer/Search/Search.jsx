@@ -1,11 +1,11 @@
-import { Col, Divider, List, Rate, Row, Slider, Select, Flex } from 'antd';
+import { Col, Divider, Flex, List, Rate, Row, Select, Slider } from 'antd';
 import { useEffect, useState } from 'react';
 import { Funnel } from 'react-bootstrap-icons';
 import Button from '~/components/Button';
 
 import { CardProductItem } from '~/components/Carousel';
 import { WrapperComponent } from '~/components/Wrapper';
-import { getProducts } from '~/services/ProductService';
+import ProductService from '~/services/ProductService';
 
 import classNames from 'classnames/bind';
 import styles from './Search.module.scss';
@@ -15,12 +15,14 @@ let maxRangePrice = 100;
 let minRangePrice = 0;
 
 function Search() {
+    const productService = ProductService();
+
     const [searchProducts, setSearchProducts] = useState([]);
 
     const [priceRange, setPriceRange] = useState([minRangePrice, maxRangePrice]);
 
     useEffect(() => {
-        getProducts()
+        productService.getProducts()
             .then((response) => {
                 setSearchProducts(response);
             })

@@ -1,26 +1,34 @@
 
 
 //Layout
-import { WithOutSidebarLayout } from "~/components/Layout";
 
 //Pages
-import Home from "~/Pages/Home";
-import Following from "~/Pages/Following";
-import Profile from "~/Pages/Profile";
-import Upload from "~/Pages/Upload";
-import Search from "~/Pages/Search";
+import {
+    OrderDetail,
+    OrderTable,
+    ProductForm,
+    ProductTable,
+    TransactionTable,
+    SellerHome
+} from '~/views/manager';
 
 //Path
 const publicRoutes = [
-    { path: '/', component: Home },
-    { path: '/following', component: Following },
-    { path: '/profile', component: Profile },
-    { path: '/upload', component: Upload, layout: WithOutSidebarLayout },
-    { path: '/search', component: Search, layout: null },
-]
+    { path: '/seller', component: SellerHome },
+
+    { path: '/seller/order/list', component: OrderTable },
+    { path: '/seller/order/detail', component: OrderDetail },
+
+    { path: '/seller/transaction/list', component: TransactionTable },
+
+    { path: '/seller/product/list', component: ProductTable },
+    { path: '/seller/product', component: ProductForm },
+];
+
 
 const privateRoutes = [
 
 ]
 
-export { publicRoutes, privateRoutes }
+export { privateRoutes, publicRoutes };
+

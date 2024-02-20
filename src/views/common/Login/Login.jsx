@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import Button from '~/components/Button';
-import { login } from '~/services/AuthService';
+import AuthService from '~/services/AuthService';
 import { useAuth } from '~/hooks';
 
 import classNames from 'classnames/bind';
@@ -21,8 +21,15 @@ const tailLayout = {
 
 const maxLengthInput = 40;
 
+const ROLE_PATH = {
+    ROLE_20001: '/manager',
+    ROLE_20003: '/seller',
+    ROLE_20002: '/',
+};
+
 const Login = () => {
     const { setAuth } = useAuth();
+    const authService = AuthService();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -30,41 +37,43 @@ const Login = () => {
     const [api, contextHolder] = notification.useNotification();
     const usernameRef = useRef(null);
 
-    const from = location.state?.from?.pathname || '/';
-
     const [respData, setRespData] = useState(location.state);
 
-    const openNotification = useCallback((placement, status, message) => {
-        api[status || 'success']({
-            message: message,
-            placement: placement,
-            className: cx('noti', `${status}`),
-            closeIcon: false,
-            duration: 3.5,
-        });
-    }, [api]);
+    const openNotification = useCallback(
+        (placement, status, message) => {
+            api[status || 'success']({
+                message: message,
+                placement: placement,
+                className: cx('noti', `${status}`),
+                closeIcon: false,
+                duration: 3.5,
+            });
+        },
+        [api],
+    );
 
     useEffect(() => {
-        if(respData) {
+        if (respData) {
             openNotification('topRight', respData?.status, respData?.message);
         }
     }, [respData, openNotification]);
 
     useEffect(() => {
-        usernameRef.current.focus();    
+        usernameRef.current.focus();
     }, []);
 
     const onFinish = (formData) => {
-        login(formData)
+        authService
+            .login(formData)
             .then((response) => {
                 const accessToken = response?.data?.accessToken;
                 const roles = response?.data?.roles;
                 const fullName = response?.data?.fullName;
 
                 setAuth({ roles, accessToken, fullName });
-                console.log(response);
 
-                Cookies.set('access_token', accessToken, { expires: 1 / 24 / 10 });
+                const from = location.state?.from?.pathname || ROLE_PATH[roles[0]] || '/';
+
                 navigate(from, {
                     state: { message: response?.data, status: response?.status === 200 ? 'success' : 'error' },
                 });
@@ -91,7 +100,7 @@ const Login = () => {
                 name="form-login"
                 initialValues={{ remember: true }}
                 autoComplete="off"
-                layout="vertical"        
+                layout="vertical"
                 onFinish={onFinish}
             >
                 <Form.Item

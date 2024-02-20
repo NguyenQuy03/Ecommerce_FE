@@ -3,11 +3,12 @@ import { useEffect, useState } from 'react';
 
 import Button from '~/components/Button';
 import { RcmProducts } from '~/components/Grid';
-import { getProducts } from '~/services/ProductService';
 
 import classNames from 'classnames/bind';
 import { WrapperComponent, WrapperContent } from '~/components/Wrapper';
 import styles from './Cart.module.scss';
+import ProductService from '~/services/ProductService';
+
 const cx = classNames.bind(styles);
 
 const columns = [
@@ -44,6 +45,7 @@ for (let i = 0; i < 10; i++) {
     });
 }
 const Cart = () => {
+    const productService = ProductService();
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const [shopProducts, setShopProducts] = useState([]);
 
@@ -54,7 +56,7 @@ const Cart = () => {
         //         console.log(response);
         //     })
         //     .catch((error) => console.error('Error fetching data:', error));
-        getProducts()
+        productService.getProducts()
             .then((response) => {
                 setShopProducts(response);
                 console.log(response);

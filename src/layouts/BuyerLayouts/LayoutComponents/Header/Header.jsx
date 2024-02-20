@@ -10,6 +10,7 @@ import Button from '~/components/Button';
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import { useAuth } from '~/hooks';
+import AuthService from '~/services/AuthService';
 const cx = classNames.bind(styles);
 const { Text } = Typography;
 
@@ -52,8 +53,8 @@ const menuItems = [
         label: <Link to="/register-seller">Register Seller</Link>,
     },
     {
-        key: '4',
-        label: <Link to="/sign-out">Sign out</Link>,
+        key: 'sign-out',
+        label: <p>Sign out</p>,
     },
 ];
 
@@ -62,6 +63,13 @@ let orderQuantity = 9;
 function Header() {
     const [searchResult, setSearchResult] = useState([]);
     const { auth } = useAuth();
+    const authService = AuthService();
+
+    const handleMenuClick = (e) => {
+        if(e.key === 'sign-out') {
+            authService.logout()
+        }
+    };
 
     useEffect(() => {
         setTimeout(() => {
@@ -78,7 +86,7 @@ function Header() {
                     </Link>
                 </Col>
 
-                <Col lg={12} sm={24} style={{ display: 'flex'}}>
+                <Col lg={12} sm={24} style={{ display: 'flex' }}>
                     <AutoComplete className={cx('search')} options={options} allowClear>
                         <Input.Search size="large" placeholder="Search for products" />
                     </AutoComplete>
@@ -87,7 +95,7 @@ function Header() {
                 <Col className={cx('actions')} sm={12} lg={6}>
                     {auth?.fullName ? (
                         <Row justify="end" align={'middle'}>
-                            <Link to={'/cart'}>
+                            <Link to={'/cart'} style={{ marginRight: '12px' }}>
                                 <Badge
                                     className={cx('cart-content')}
                                     color="#d19c97"
@@ -101,6 +109,7 @@ function Header() {
                                 className={cx('drop-down')}
                                 menu={{
                                     items: menuItems,
+                                    onClick: handleMenuClick,
                                 }}
                                 arrow={false}
                             >
@@ -108,7 +117,7 @@ function Header() {
                                     <Text
                                         style={{
                                             width: 120,
-                                            alignItems: 'center'
+                                            alignItems: 'center',
                                         }}
                                         ellipsis={{
                                             tooltip: <></>,

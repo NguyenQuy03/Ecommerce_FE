@@ -4,21 +4,25 @@ import { WrapperComponent } from '~/components/Wrapper';
 
 import TitleSection from '~/components/TitleSection';
 
-import { getCategories } from '~/services/CategoryService';
-import { getProducts } from '~/services/ProductService';
+import CategoryService from '~/services/CategoryService';
+import ProductService from '~/services/ProductService';
 
-import { Carousel, CardCategoryItem, CardProductItem } from '~/components/Carousel';
+import { CardCategoryItem, CardProductItem, Carousel } from '~/components/Carousel';
 
 import classNames from 'classnames/bind';
 import styles from './Home.module.scss';
 const cx = classNames.bind(styles);
 
 function Home() {
+    const productService = ProductService();
+    const categoryService = CategoryService();
+
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
-        getProducts()
+        productService
+            .getProducts()
             .then((response) => {
                 setProducts(response);
             })
@@ -26,7 +30,8 @@ function Home() {
     }, []);
 
     useEffect(() => {
-        getCategories()
+        categoryService
+            .getCategories()
             .then((response) => {
                 setCategories(response);
             })

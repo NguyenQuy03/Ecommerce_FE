@@ -4,11 +4,11 @@ import { CheckLg, PencilFill, PersonFill, XLg } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '~/components/Button';
-import { register } from '~/services/AuthService';
 
 import classNames from 'classnames/bind';
 import styles from './AccountDetail.module.scss';
 import { Content } from '~/layouts/ManagerLayouts/LayoutComponents';
+import AuthService from '~/services/AuthService';
 const cx = classNames.bind(styles);
 
 const maxLengthName = 40;
@@ -44,6 +44,8 @@ const layoutForm = {
 };
 
 function AccountDetail() {
+    const authService = AuthService();
+
     const navigate = useNavigate();
 
     // Set Value Error
@@ -58,7 +60,7 @@ function AccountDetail() {
         ]);
     };
     const onFinish = (formData) => {
-        register(formData)
+        authService.register(formData)
             .then((response) => {
                 navigate('/login', { state: { message: response.data, status: 'success' } });
             })

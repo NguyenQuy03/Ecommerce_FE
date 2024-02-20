@@ -128,7 +128,7 @@ function Carousel({
 }
 
 Carousel.propTypes = {
-    items: PropTypes.array.isRequired,
+    items: PropTypes.array,
     element: PropTypes.oneOfType([
         PropTypes.shape({ type: PropTypes.oneOf([CardCategoryItem]) }),
         PropTypes.shape({ type: PropTypes.oneOf([CardProductItem]) }),

@@ -1,4 +1,3 @@
-
 //Pages
 import { Login, Missing, Register } from "~/views/common";
 
@@ -7,11 +6,8 @@ const publicRoutes = [
     { path: '/login', component: Login },
     { path: '/register', component: Register },
     { path: '/*', component: Missing, layout: null },
-]
+];
 
-const privateRoutes = [
-
-]
+const privateRoutes = [];
 
 export { privateRoutes, publicRoutes };
-

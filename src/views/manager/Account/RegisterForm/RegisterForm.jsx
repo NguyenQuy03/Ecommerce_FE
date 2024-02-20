@@ -2,11 +2,11 @@ import { Flex, Form, Input, Select, Switch, Col, Row } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 import Button from '~/components/Button';
-import { register } from '~/services/AuthService';
 
 import classNames from 'classnames/bind';
 import styles from './RegisterForm.module.scss';
 import { Content } from '~/layouts/ManagerLayouts/LayoutComponents';
+import AuthService from '~/services/AuthService';
 const cx = classNames.bind(styles);
 
 const maxLengthName = 40;
@@ -45,6 +45,7 @@ const layout = {
 };
 
 const RegisterForm = () => {
+    const authService = AuthService();
     const navigate = useNavigate();
 
     // Set Value Error
@@ -59,7 +60,7 @@ const RegisterForm = () => {
     };
 
     const onFinish = (formData) => {
-        register(formData)
+        authService.register(formData)
             .then((response) => {
                 navigate('/login', { state: { message: response.data, status: 'success' } });
             })

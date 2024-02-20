@@ -22,9 +22,8 @@ const items = [
         icon: <Person />,
         label: 'Account',
         children: [
-            { key: 'acc1', label: <Link to={'/manager/account/seller/list'}>Seller Accounts</Link> },
-            { key: 'acc2', label: <Link to={'/manager/account/buyer/list'}>Buyer Accounts</Link> },
-            { key: 'acc3', label: <Link to={'/manager/account'}>Add Account</Link> },
+            { key: 'acc1', label: <Link to={'/manager/account/list'}>User Accounts</Link> },
+            { key: 'acc2', label: <Link to={'/manager/account'}>Add Account</Link> },
         ],
     },
     {

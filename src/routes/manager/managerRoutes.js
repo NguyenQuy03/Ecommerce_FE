@@ -7,7 +7,7 @@ import {
     AccountTable,
     RegisterForm,
     AccountDetail,
-    Home,
+    ManagerHome,
     OrderTable,
     OrderDetail,
     TransactionTable,
@@ -19,7 +19,7 @@ import Test from '~/views/test/Test';
 
 //Path
 const publicRoutes = [
-    { path: '/manager', component: Home },
+    { path: '/manager', component: ManagerHome },
 
     { path: '/manager/order/list', component: OrderTable },
     { path: '/manager/order/detail', component: OrderDetail },
@@ -27,8 +27,7 @@ const publicRoutes = [
     { path: '/manager/transaction/list', component: TransactionTable },
 
     { path: '/manager/account', component: RegisterForm },
-    { path: '/manager/account/seller/list', component: AccountTable },
-    { path: '/manager/account/buyer/list', component: AccountTable },
+    { path: '/manager/account/list', component: AccountTable },
     { path: '/manager/account/detail', component: AccountDetail },
 
     { path: '/manager/category/list', component: CategoryTable },

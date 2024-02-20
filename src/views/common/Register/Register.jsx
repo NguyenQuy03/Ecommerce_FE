@@ -2,7 +2,7 @@ import { Flex, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Button from '~/components/Button';
-import { register } from '~/services/AuthService';
+import AuthService from '~/services/AuthService';
 
 import classNames from 'classnames/bind';
 import styles from './Register.module.scss';
@@ -27,6 +27,8 @@ const tailLayout = {
 };
 
 const Register = () => {
+    const authService = AuthService();
+
     const navigate = useNavigate();
 
     // Set Value Error
@@ -41,7 +43,7 @@ const Register = () => {
     };
 
     const onFinish = (formData) => {
-        register(formData)
+        authService.register(formData)
             .then((response) => {
                 navigate('/login', { state: { message: response.data, status: 'success' } });
             })
