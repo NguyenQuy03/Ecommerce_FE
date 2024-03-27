@@ -1,4 +1,4 @@
-import { AutoComplete, Badge, Col, Dropdown, Input, Row, Typography } from 'antd';
+import { AutoComplete, Badge, Col, Dropdown, Input, Row, Typography, Spin } from 'antd';
 import { Header as AntHeader } from 'antd/es/layout/layout';
 import { useEffect, useState } from 'react';
 import { Cart, ChevronDown } from 'react-bootstrap-icons';
@@ -10,7 +10,7 @@ import Button from '~/components/Button';
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import { useAuth } from '~/hooks';
-import AuthService from '~/services/AuthService';
+import AuthService from '~/services/buyer/AuthService';
 const cx = classNames.bind(styles);
 const { Text } = Typography;
 
@@ -62,13 +62,23 @@ let orderQuantity = 9;
 
 function Header() {
     const [searchResult, setSearchResult] = useState([]);
+    const [spinning, setSpinning] = useState(false);
+
     const { auth } = useAuth();
     const authService = AuthService();
 
     const handleMenuClick = (e) => {
-        if(e.key === 'sign-out') {
-            authService.logout()
+        if (e.key === 'sign-out') {
+            authService.logout();
+            showLoader();
         }
+    };
+
+    const showLoader = () => {
+        setSpinning(true);
+        setTimeout(() => {
+            setSpinning(false);
+        }, 600);
     };
 
     useEffect(() => {
@@ -79,6 +89,8 @@ function Header() {
 
     return (
         <AntHeader className={cx('wrapper')}>
+            <Spin spinning={spinning} fullscreen />
+
             <Row className={cx('inner')} justify="space-between" align="middle">
                 <Col sm={12} lg={6}>
                     <Link to="/">

@@ -1,9 +1,12 @@
 import { useAuth } from '~/hooks';
 import { axiosPrivate } from '~/utils/httpRequest';
 
-const LOGIN_URL = '/v1/auth/login';
-const LOGOUT_URL = '/v1/auth/logout';
-const REGISTER_URL = '/v1/auth/register';
+const PREFIX_URL = '/v1/auth';
+
+const LOGIN_URL = PREFIX_URL + '/login';
+const LOGOUT_URL = PREFIX_URL + '/logout';
+const REGISTER_URL = PREFIX_URL + '/register';
+const REFRESH_TOKEN_URL = PREFIX_URL + '/refresh-token';
 
 function AuthService() {
     const { setAuth } = useAuth();
@@ -19,13 +22,13 @@ function AuthService() {
 
     const logout = async () => {
         try {
-            const response = await axiosPrivate.post(LOGOUT_URL, {
-                withCredentials: true,
-            });
-            
+            const response = await axiosPrivate.post(LOGOUT_URL);
+
             if (response) {
                 setAuth({});
             }
+            console.log(response);
+            return response;
         } catch (err) {
             console.error(err);
         }
@@ -41,9 +44,7 @@ function AuthService() {
     };
 
     const refresh = async () => {
-        const response = await axiosPrivate.post('/v1/auth/refresh-token', {
-            withCredentials: true,
-        });
+        const response = await axiosPrivate.post(REFRESH_TOKEN_URL);
 
         setAuth(response.data);
         return response.data.accessToken;

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Outlet } from 'react-router-dom';
+import { Spin } from 'antd';
 import { useAuth } from '~/hooks';
-import AuthService from '~/services/AuthService';
+import AuthService from '~/services/buyer/AuthService';
 
 const PersistLogin = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -26,7 +27,7 @@ const PersistLogin = () => {
         return () => (isMounted = false);
     }, []);
 
-    return <>{isLoading ? <p>Loading...</p> : <Outlet />}</>;
+    return <>{isLoading ? <Spin spinning={isLoading} fullscreen /> : <Outlet />}</>;
 };
 
 export default PersistLogin;

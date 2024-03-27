@@ -7,7 +7,7 @@ import { RcmProducts } from '~/components/Grid';
 import classNames from 'classnames/bind';
 import { WrapperComponent, WrapperContent } from '~/components/Wrapper';
 import styles from './Cart.module.scss';
-import ProductService from '~/services/ProductService';
+import ProductService from '~/services/buyer/ProductService';
 
 const cx = classNames.bind(styles);
 
@@ -50,13 +50,8 @@ const Cart = () => {
     const [shopProducts, setShopProducts] = useState([]);
 
     useEffect(() => {
-        // getProductsBySellerId({ id })
-        //     .then((response) => {
-        //         setShopProducts(response);
-        //         console.log(response);
-        //     })
-        //     .catch((error) => console.error('Error fetching data:', error));
-        productService.getProducts()
+        productService
+            .getProducts()
             .then((response) => {
                 setShopProducts(response);
                 console.log(response);

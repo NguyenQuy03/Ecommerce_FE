@@ -1,46 +1,41 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Plus, Search } from 'react-bootstrap-icons';
 
-import { Flex, Input, Popconfirm, Select, Space, Table, Tabs } from 'antd';
+import { Flex, Input, Popconfirm, Select, Space, Table, Tabs, Tag, notification } from 'antd';
 import Button from '~/components/Button';
 
 import classNames from 'classnames/bind';
 import styles from './AccountTable.module.scss';
 import { Content } from '~/layouts/ManagerLayouts/LayoutComponents';
+import AccountService from '~/services/manager/AccountService';
 const cx = classNames.bind(styles);
 
-const data = [
-    {
-        key: '1',
-        name: 'John Brown',
-        email: 32,
-        phone: 32,
-        address: 'New York No. 1 Lake Park',
-    },
-    {
-        key: '2',
-        name: 'Joe Black',
-        email: 42,
-        phone: 42,
-        address: 'London No. 1 Lake Park',
-    },
-    {
-        key: '3',
-        name: 'Jim Green',
-        email: 32,
-        phone: 32,
-        address: 'Sydney No. 1 Lake Park',
-    },
-    {
-        key: '4',
-        name: 'Jim Red',
-        email: 32,
-        phone: 32,
-        address: 'London No. 2 Lake Park',
-    },
-];
 const AccountTable = () => {
+    const accountService = AccountService();
+
     const searchInput = useRef(null);
+    const [accounts, setAccounts] = useState([]);
+    const [activeTab, setActiveTab] = useState('all');
+
+    useEffect(() => {
+        accountService
+            .getAccounts({ type: activeTab, page: '1', size: '2' })
+            .then((response) => {
+                setAccounts(response);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    }, [activeTab]);
+
+    const [api, notify] = notification.useNotification();
+    const openNotificationWithIcon = (type, title, desc) => {
+        api[type]({
+            message: title,
+            description: desc,
+        });
+    };
+
     const handleSearch = (confirm) => {
         confirm();
     };
@@ -109,7 +104,6 @@ const AccountTable = () => {
 
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const onSelectChange = (newSelectedRowKeys) => {
-        console.log('selectedRowKeys changed: ', newSelectedRowKeys);
         setSelectedRowKeys(newSelectedRowKeys);
     };
 
@@ -119,12 +113,31 @@ const AccountTable = () => {
     };
 
     // Handle Bulk Actions
-    const [bulkActionValue, setBulkAcionValue] = useState(null);
+    const [bulkActionValue, setBulkActionValue] = useState(null);
 
     const hasSelected = selectedRowKeys.length > 0;
     const confirm = (e) => {
-        console.log(bulkActionValue);
+        accountService
+            .changeAccountStatus(selectedRowKeys, {
+                action: bulkActionValue,
+            })
+            .then((response) => {
+                const updatedAccounts = accounts.map((acc) => {
+                    if (selectedRowKeys.includes(acc.id)) {
+                        acc = { ...acc, active: bulkActionValue !== 'disable' };
+                    }
+                    return acc;
+                });
+                setAccounts(updatedAccounts);
+                setBulkActionValue(null);
+                setSelectedRowKeys([]);
+                openNotificationWithIcon('success', response.data);
+            })
+            .catch((e) => {
+                console.log(e);
+            });
     };
+
     const cancel = (e) => {
         console.log('Cancel');
     };
@@ -132,7 +145,7 @@ const AccountTable = () => {
     const renderTitle = () => {
         return (
             <Flex justify="space-between">
-                <h1 className={cx('title')}>Buyers</h1>
+                <h1 className={cx('title')}>{accounts.length + (accounts.length > 1 ? ' Accounts' : ' Account')}</h1>
                 {!hasSelected ? (
                     <Button
                         to={'/manager/account'}
@@ -152,18 +165,21 @@ const AccountTable = () => {
                             placeholder="Bulk Actions"
                             options={[
                                 {
-                                    value: 'delete',
-                                    label: 'Delete',
+                                    value: 'disable',
+                                    label: 'Disable',
+                                },
+                                {
+                                    value: 'active',
+                                    label: 'Active',
                                 },
                             ]}
                             onChange={(value) => {
-                                setBulkAcionValue(value);
+                                setBulkActionValue(value);
                                 console.log('selected value:', value);
                             }}
                         />
                         <Popconfirm
-                            title="Delete the task"
-                            description="Are you sure to delete this task?"
+                            title="Are you sure to do this?"
                             onConfirm={confirm}
                             onCancel={cancel}
                             okText="Yes"
@@ -182,11 +198,11 @@ const AccountTable = () => {
     const columns = [
         {
             title: 'Name',
-            dataIndex: 'name',
-            key: 'name',
+            dataIndex: 'fullName',
+            key: 'fullName',
             width: '30%',
             render: (text) => <a href={text}>{text}</a>,
-            ...getColumnSearchProps('name'),
+            ...getColumnSearchProps('fullName'),
         },
         {
             title: 'Email',
@@ -208,6 +224,12 @@ const AccountTable = () => {
             key: 'address',
             ...getColumnSearchProps('address'),
         },
+        {
+            title: 'Status',
+            key: 'active',
+            dataIndex: 'active',
+            render: (record) => (record ? <Tag color="green">Active</Tag> : <Tag color="red">Disabled</Tag>),
+        },
     ];
 
     const tabs = [
@@ -225,14 +247,29 @@ const AccountTable = () => {
         },
     ];
 
-    const handleTab = (tab) => {
-        console.log(tab);
+    const handleTab = (activeTab) => {
+        setActiveTab(activeTab);
     };
+
     return (
         <Content>
-            <Tabs defaultActiveKey="all" type="card" items={tabs} size="middle" onChange={(tab) => handleTab(tab)} />
+            {notify}
+            <Tabs
+                defaultActiveKey="all"
+                type="card"
+                items={tabs}
+                size="middle"
+                onChange={(activeTab) => handleTab(activeTab)}
+            />
 
-            <Table rowSelection={rowSelection} columns={columns} dataSource={data} title={renderTitle} />
+            <Table
+                rowSelection={rowSelection}
+                columns={columns}
+                dataSource={accounts}
+                title={renderTitle}
+                rowKey="id"
+                pagination={{ pageSize: 1 }}
+            />
         </Content>
     );
 };

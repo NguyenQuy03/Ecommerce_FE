@@ -1,10 +1,10 @@
-import { Flex, Form, Input, Modal, Upload, message } from 'antd';
+import { Flex, Form, Input, Modal, Upload, message, notification } from 'antd';
 import ImgCrop from 'antd-img-crop';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Button from '~/components/Button';
-import { useAuth } from '~/hooks';
 import { Content } from '~/layouts/ManagerLayouts/LayoutComponents';
-import CategoryService from '~/services/CategoryService';
+import CategoryService from '~/services/manager/CategoryService';
 
 const getBase64 = (file) =>
     new Promise((resolve, reject) => {
@@ -32,26 +32,66 @@ const maxLengthName = 20;
 const CategoryForm = () => {
     const categoryService = CategoryService();
 
+    const location = useLocation();
+
     const [fileList, setFileList] = useState([]);
 
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewThumbnail, setPreviewThumbnail] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
 
-    const { auth } = useAuth();
+    useEffect(() => {
+        if (location.state) {
+            form.setFieldsValue(location.state);
+            setFileList([
+                {
+                    uid: '-1',
+                    name: 'image.png',
+                    status: 'done',
+                    thumbUrl: location.state?.thumbnail,
+                },
+            ]);
+        }
+    }, []);
+
+    const [api, notify] = notification.useNotification();
+    const openNotificationWithIcon = (type, message) => {
+        api[type]({
+          message: message
+        });
+      };
 
     // Handle Submit Behavior
     const [form] = Form.useForm();
     const onFinish = (formData) => {
-        console.log(formData);
+        formData['thumbnail'] = fileList[0].thumbUrl;
 
-        categoryService.addCategory(formData, auth.accessToken)
-            .then((response) => {
-                console.log(response);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
+        if (location.state) {
+            categoryService
+                .updateCategory(formData)
+                .then((response) => {
+                    openNotificationWithIcon('success', response.data);
+                    form.resetFields();
+                    setFileList([]);
+                    location.state = null;
+                })
+                .catch((error) => {
+                    openNotificationWithIcon('error', error.data);
+                    console.log(error);
+                });
+        } else {
+            categoryService
+                .addCategory(formData)
+                .then((response) => {
+                    openNotificationWithIcon('success', response.data);
+                    form.resetFields();
+                    setFileList([]);
+                })
+                .catch((error) => {
+                    openNotificationWithIcon('error', error.data);
+                    console.log(error);
+                });
+        }
     };
 
     const onFinishFailed = (e) => {
@@ -59,15 +99,11 @@ const CategoryForm = () => {
         console.log(e);
     };
 
-    // Validate Form Field
     const handleChange = async ({ fileList: newFileList }) => {
-        // Update the fileList state
         setFileList(newFileList);
 
-        // Convert files to base64 and update form values
         const base64Promises = newFileList.map((file) => {
             if (file.originFileObj && !file.url && !file.preview) {
-                // Only convert to base64 if it's a newly added file without a preview
                 return getBase64(file.originFileObj);
             }
             return Promise.resolve(file.url || file.preview);
@@ -75,7 +111,6 @@ const CategoryForm = () => {
 
         const base64Files = await Promise.all(base64Promises);
 
-        // Update the form with the base64 strings
         form.setFieldsValue({ thumbnail: base64Files });
     };
 
@@ -93,6 +128,7 @@ const CategoryForm = () => {
     return (
         <Content>
             <Flex>
+                {notify}
                 <p style={{ fontSize: '2.4rem', fontWeight: 500 }}>BASIC INFORMATION</p>
             </Flex>
 
@@ -110,6 +146,9 @@ const CategoryForm = () => {
                 onFinishFailed={onFinishFailed}
                 style={{ padding: '20px 0' }}
             >
+                <Form.Item name="id" style={{ display: 'none' }}>
+                    <Input type="hidden" />
+                </Form.Item>
                 <Form.Item
                     name="code"
                     label="Code"

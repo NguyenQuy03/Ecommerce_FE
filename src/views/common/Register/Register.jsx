@@ -2,7 +2,7 @@ import { Flex, Form, Input } from 'antd';
 import { Link, useNavigate } from 'react-router-dom';
 
 import Button from '~/components/Button';
-import AuthService from '~/services/AuthService';
+import AuthService from '~/services/buyer/AuthService';
 
 import classNames from 'classnames/bind';
 import styles from './Register.module.scss';
@@ -15,8 +15,7 @@ const USER_REGEX = /^[A-Za-z0-9]+$/;
 // const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 
 // const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const emailRegex =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[\d.]{1,3}\.[\d.]{1,3}\.[\d.]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const emailRegex = /^[\w.-]+@[A-Za-z]{2,}\.[A-Za-z]{2,}$/;
 
 const layout = {
     labelCol: { span: 12 },

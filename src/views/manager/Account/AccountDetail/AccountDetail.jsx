@@ -1,4 +1,4 @@
-import { Col, Divider, Flex, Form, Input, Popconfirm, Row, Select, Switch } from 'antd';
+import { Col, Flex, Form, Input, Popconfirm, Row, Select, Switch } from 'antd';
 import { useState } from 'react';
 import { CheckLg, PencilFill, PersonFill, XLg } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
@@ -6,18 +6,16 @@ import { useNavigate } from 'react-router-dom';
 import Button from '~/components/Button';
 
 import classNames from 'classnames/bind';
-import styles from './AccountDetail.module.scss';
 import { Content } from '~/layouts/ManagerLayouts/LayoutComponents';
-import AuthService from '~/services/AuthService';
+import AuthService from '~/services/buyer/AuthService';
+import styles from './AccountDetail.module.scss';
 const cx = classNames.bind(styles);
 
 const maxLengthName = 40;
 const maxLengthEmail = 100;
 
 const USER_REGEX = /^[A-Za-z0-9]+$/;
-const emailRegex =
-    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[\d.]{1,3}\.[\d.]{1,3}\.[\d.]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
+const emailRegex = /^[\w.-]+@[A-Za-z]{2,}\.[A-Za-z]{2,}$/;
 const layoutForm = {
     labelCol: {
         xs: {
@@ -60,7 +58,8 @@ function AccountDetail() {
         ]);
     };
     const onFinish = (formData) => {
-        authService.register(formData)
+        authService
+            .register(formData)
             .then((response) => {
                 navigate('/login', { state: { message: response.data, status: 'success' } });
             })
@@ -226,9 +225,7 @@ function AccountDetail() {
                             <Form.Item
                                 label="Address"
                                 name="address"
-                                rules={[
-                                    { required: true, message: 'Please input your address!' },
-                                ]}
+                                rules={[{ required: true, message: 'Please input your address!' }]}
                             >
                                 <Input className={cx('field')} readOnly={!isEditing} />
                             </Form.Item>
@@ -236,9 +233,7 @@ function AccountDetail() {
                             <Form.Item
                                 label="Phone Number"
                                 name="phoneNumber"
-                                rules={[
-                                    { required: true, message: 'Please input your phone number!' },
-                                ]}
+                                rules={[{ required: true, message: 'Please input your phone number!' }]}
                             >
                                 <Input className={cx('field')} readOnly={!isEditing} />
                             </Form.Item>

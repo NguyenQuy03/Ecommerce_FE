@@ -5,7 +5,7 @@ import Button from '~/components/Button';
 
 import { CardProductItem } from '~/components/Carousel';
 import { WrapperComponent } from '~/components/Wrapper';
-import ProductService from '~/services/ProductService';
+import ProductService from '~/services/buyer/ProductService';
 
 import classNames from 'classnames/bind';
 import styles from './Search.module.scss';

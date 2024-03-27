@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Col, Divider, InputNumber, Radio, Rate, Row, Space } from 'antd';
 import { CartPlus, ChatSquareText, ShopWindow } from 'react-bootstrap-icons';
 
-import ProductService from '~/services/ProductService';
+import ProductService from '~/services/buyer/ProductService';
 
 import Button from '~/components/Button';
 import { BannerItem, CardProductItem, Carousel } from '~/components/Carousel';
@@ -64,7 +64,7 @@ function DetailProduct() {
                     <Row className={cx('detail')} gutter={[30, 0]}>
                         <Col lg={10} sm={24} md={24}>
                             <Carousel
-                                items={product?.images}
+                                items={product?.productImages}
                                 element={<BannerItem />}
                                 showIndicators={false}
                                 autoplay={false}

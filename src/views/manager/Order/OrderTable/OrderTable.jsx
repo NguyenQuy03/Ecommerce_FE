@@ -1,10 +1,8 @@
-import { Dropdown, Space, Table } from 'antd';
-import { ThreeDots, FunnelFill } from 'react-bootstrap-icons';
+import { Dropdown, Space, Table, Flex, Popconfirm, Select } from 'antd';
+import { FunnelFill, ThreeDots, Plus } from 'react-bootstrap-icons';
 
 import { useState } from 'react';
-import { Plus } from 'react-bootstrap-icons';
 
-import { Flex, Popconfirm, Select } from 'antd';
 import Button from '~/components/Button';
 
 import { Content } from '~/layouts/ManagerLayouts/LayoutComponents';
@@ -178,12 +176,7 @@ const OrderTable = () => {
                         >
                             New
                         </Button>
-                        <Button
-                            size={'small'}
-                            type={'outline'}
-                            leftIcon={<FunnelFill />}
-                            className={cx('btn')}
-                        >
+                        <Button size={'small'} type={'outline'} leftIcon={<FunnelFill />} className={cx('btn')}>
                             Filter
                         </Button>
                     </Flex>
