@@ -11,64 +11,72 @@ function ProductService() {
 
     const getProducts = async () => {
         try {
-            const res = await axiosPrivate.get(PRODUCT_URL);
-            res.data.map(item => {
-                item.image = item.productImages[0];
-            })
-            console.log(res.data);
+            const res = await axiosPrivate.get(PRODUCT_URL, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
             return res.data;
-        } catch (e) {
-            throw e.response;
+        } catch (error) {
+            throw new Error('Failed to fetch products');
         }
     };
 
     const getProductsBySellerId = async ({ sellerId }) => {
         try {
             const res = await axiosPrivate.get(PRODUCT_RECOMMEND_BY_SELLER_URL, {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                 params: {
                     sellerId: 3,
                 },
             });
             return res.data.listResult;
-        } catch (e) {
-            throw e.response;
+        } catch (error) {
+            throw new Error('Failed to fetch products');
         }
     };
 
     const getProduct = async ({ id }) => {
         try {
-            const res = await axiosPrivate.get(PRODUCT_DETAIL_URL, {
+            const res = await axiosPrivate.get(PRODUCT_DETAIL_URL , {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
                 params: {
-                    id: JSON.parse(id),
+                    id: id,
                 },
             });
             if (res.data) {
                 const variations = {};
+                const images = [];
+                images.push(res.data.image);
 
                 res.data.specification = JSON.parse(res.data.specification);
-
                 res.data.productItems.forEach((element) => {
+                    element.variation = JSON.parse(element.variation);
+
                     // Group all variation of product_item to a map
-                    element.variation.split(';').forEach((pair) => {
-                        const [key, value] = pair.split(':').map((item) => item.trim());
+                    for (let key in element.variation) {
                         if (!variations[key]) {
                             variations[key] = [];
                         }
-                        if (!variations[key].includes(value)) {
-                            variations[key].push(value);
+                        if (!variations[key].includes(element.variation[key])) {
+                            variations[key].push(element.variation[key]);
                         }
-                    });
-
+                    }
                     res.data.variations = variations;
 
                     // Group all image to a list
-                    res.data.productImages.push(element.image);
+                    images.push(element.image);
                 });
-            }
 
+                res.data['images'] = images;
+            }
             return res?.data;
-        } catch (e) {
-            throw e.response;
+        } catch (error) {
+            throw new Error('Failed to fetch product details');
         }
     };
 

@@ -1,8 +1,10 @@
-import { Dropdown, Flex, Popconfirm, Select, Space, Table } from 'antd';
-import { FunnelFill, Plus, ThreeDots } from 'react-bootstrap-icons';
+import { Dropdown, Space, Table } from 'antd';
+import { FunnelFill, ThreeDots } from 'react-bootstrap-icons';
 
 import { useState } from 'react';
+import { Plus } from 'react-bootstrap-icons';
 
+import { Flex, Popconfirm, Select } from 'antd';
 import Button from '~/components/Button';
 
 import { Content } from '~/layouts/ManagerLayouts/LayoutComponents';

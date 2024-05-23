@@ -1,13 +1,12 @@
-import { Col, Flex, Form, Input, Row, Select, Switch, notification } from 'antd';
-import { useEffect, useState } from 'react';
+import { Flex, Form, Input, Select, Switch, Col, Row } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 import Button from '~/components/Button';
 
 import classNames from 'classnames/bind';
-import { Content } from '~/layouts/ManagerLayouts/LayoutComponents';
-import AuthService from '~/services/manager/AuthService';
-import RoleService from '~/services/manager/RoleService';
 import styles from './RegisterForm.module.scss';
+import { Content } from '~/layouts/ManagerLayouts/LayoutComponents';
+import AuthService from '~/services/AuthService';
 const cx = classNames.bind(styles);
 
 const maxLengthName = 40;
@@ -17,7 +16,9 @@ const USER_REGEX = /^[A-Za-z0-9]+$/;
 // const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 
 // const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const emailRegex = /^[\w.-]+@[a-zA-Z\d-]+\.[a-zA-Z]{2,}$/;
+const emailRegex =
+    /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[\d.]{1,3}\.[\d.]{1,3}\.[\d.]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
 const layout = {
     labelCol: {
         xs: {
@@ -45,26 +46,7 @@ const layout = {
 
 const RegisterForm = () => {
     const authService = AuthService();
-    const roleService = RoleService();
-
-    const [roles, setRoles] = useState();
-
-    useEffect(() => {
-        roleService
-            .getRoles()
-            .then((response) => {
-                setRoles(response);
-            })
-            .catch((error) => console.error('Error fetching roles in Register Form:', error));
-    }, []);
-
-    const [api, notify] = notification.useNotification();
-    const openNotificationWithIcon = (type, title, desc) => {
-        api[type]({
-            message: title,
-            description: desc,
-        });
-    };
+    const navigate = useNavigate();
 
     // Set Value Error
     const [form] = Form.useForm();
@@ -78,11 +60,9 @@ const RegisterForm = () => {
     };
 
     const onFinish = (formData) => {
-        authService
-            .register(formData)
+        authService.register(formData)
             .then((response) => {
-                openNotificationWithIcon('success', response.data);
-                form.resetFields();
+                navigate('/login', { state: { message: response.data, status: 'success' } });
             })
             .catch((error) => {
                 let errorFeedBack = error.response?.data.errorFeedBack;
@@ -105,7 +85,6 @@ const RegisterForm = () => {
 
     return (
         <Flex>
-            {notify}
             <Content className={cx('content')}>
                 <Flex>
                     <h3 className={cx('title')}>Register</h3>
@@ -216,12 +195,15 @@ const RegisterForm = () => {
                                         message: 'Please choose a role!',
                                     },
                                 ]}
-                                required={true}
+                                required
                             >
-                                <Select fieldNames={{ label: 'name', value: 'code' }} options={roles}></Select>
+                                <Select>
+                                    <Select.Option value="buyer">Buyer</Select.Option>
+                                    <Select.Option value="seller">Seller</Select.Option>
+                                </Select>
                             </Form.Item>
 
-                            <Form.Item name="isActive" label="Status" initialValue={false}>
+                            <Form.Item name={'status'} label="Status">
                                 <Switch />
                             </Form.Item>
 

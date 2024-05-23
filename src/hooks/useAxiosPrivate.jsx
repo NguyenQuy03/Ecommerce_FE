@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useAuth } from '~/hooks';
 import { axiosPrivate } from '~/utils/httpRequest';
-import AuthService from '~/services/buyer/AuthService';
+import AuthService from '~/services/AuthService';
 
 const useAxiosPrivate = () => {
     const authService = AuthService();

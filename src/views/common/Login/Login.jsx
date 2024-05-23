@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useCallback } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 import Button from '~/components/Button';
-import AuthService from '~/services/buyer/AuthService';
+import AuthService from '~/services/AuthService';
 import { useAuth } from '~/hooks';
 
 import classNames from 'classnames/bind';

@@ -27,13 +27,13 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                {commonRoutes.map((route) => {
+                {commonRoutes.map((route, index) => {
                     let Layout = route.layout || LayoutBlank;
                     let Page = route.component;
 
                     return (
                         <Route
-                            key={route.path}
+                            key={index}
                             path={route.path}
                             element={
                                 <Layout>

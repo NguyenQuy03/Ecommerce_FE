@@ -4,8 +4,8 @@ import { WrapperComponent } from '~/components/Wrapper';
 
 import TitleSection from '~/components/TitleSection';
 
-import CategoryService from '~/services/buyer/CategoryService';
-import ProductService from '~/services/buyer/ProductService';
+import CategoryService from '~/services/CategoryService';
+import ProductService from '~/services/ProductService';
 
 import { CardCategoryItem, CardProductItem, Carousel } from '~/components/Carousel';
 

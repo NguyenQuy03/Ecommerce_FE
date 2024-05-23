@@ -1,7 +1,7 @@
-import { Dropdown, Popconfirm, Select, Table, Tabs } from 'antd';
-import { FunnelFill, Plus, ThreeDots } from 'react-bootstrap-icons';
+import { Dropdown, Space, Table, Tabs, Select, Popconfirm } from 'antd';
+import { Plus, ThreeDots, FunnelFill } from 'react-bootstrap-icons';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { Flex } from 'antd';
 import Button from '~/components/Button';
@@ -9,7 +9,6 @@ import Button from '~/components/Button';
 import { Content } from '~/layouts/ManagerLayouts/LayoutComponents';
 
 import classNames from 'classnames/bind';
-import ProductService from '~/services/manager/ProductService';
 import styles from './ProductTable.module.scss';
 const cx = classNames.bind(styles);
 
@@ -21,7 +20,6 @@ const actionItems = [
     {
         key: 'copy',
         label: 'Copy',
-        disabled: true,
     },
     {
         key: 'delete',
@@ -31,28 +29,7 @@ const actionItems = [
 ];
 
 const ProductTable = () => {
-    const productService = ProductService();
-
-    const [products, setProducts] = useState([]);
-    const [activeTab, setActiveTab] = useState("all");
-
-    useEffect(() => {
-        productService
-            .getProductsByStatus({ type: activeTab })
-            .then((res) => {
-                const modifiedProducts = res.map((product) => ({
-                    ...product,
-                    totalStock: product.additionalInfo.totalStock,
-                    totalSold: product.additionalInfo.totalSold,
-                }));
-                setProducts(modifiedProducts);
-            })
-            .catch((e) => {
-                console.log(e);
-            });
-    }, [activeTab, productService]);
-
-    const expandedRowRender = (product) => {
+    const expandedRowRender = () => {
         const columns = [
             {
                 title: 'SKU',
@@ -60,16 +37,9 @@ const ProductTable = () => {
                 key: 'sku',
             },
             {
-                title: 'Variation',
-                dataIndex: 'variation',
-                key: 'variation',
-                render: (variation) => {
-                    return Object.entries(variation).map(([key, value]) => (
-                        <div key={key}>
-                            <strong>{key.charAt(0).toUpperCase() + key.slice(1)}:</strong> {value}
-                        </div>
-                    ));
-                },
+                title: 'Variations',
+                dataIndex: 'variations',
+                key: 'variations',
             },
             {
                 title: 'Price',
@@ -88,23 +58,25 @@ const ProductTable = () => {
             },
         ];
 
-        product.productItems.forEach((item) => {
-
-            try {
-                item.variation = JSON.parse(item.variation);
-            } catch (error) {
-                console.log(error);
-            }
-        });
-
-        return <Table columns={columns} dataSource={product.productItems} pagination={false} rowKey="id" />;
+        const data = [];
+        for (let i = 0; i < 3; ++i) {
+            data.push({
+                key: i.toString(),
+                sku: 'Platinum web hosting package9',
+                variations: '2',
+                price: '15',
+                stock: '30',
+                sold: '30',
+            });
+        }
+        return <Table columns={columns} dataSource={data} pagination={false} />;
     };
 
     const columns = [
         {
             title: 'Product',
-            dataIndex: 'name',
-            key: 'name',
+            dataIndex: 'product',
+            key: 'product',
             sorter: (a, b) => a.product - b.product,
         },
         {
@@ -134,6 +106,21 @@ const ProductTable = () => {
         },
     ];
 
+    const data = [];
+    for (let i = 0; i < 3; ++i) {
+        data.push({
+            key: i.toString(),
+            product: (
+                <>
+                    <p>#201 by Miles Haley </p>
+                    <p>haley@example.com</p>
+                </>
+            ),
+            totalStock: '100',
+            totalSold: '200',
+        });
+    }
+
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
     const onSelectChange = (newSelectedRowKeys) => {
         console.log('selectedRowKeys changed: ', newSelectedRowKeys);
@@ -159,7 +146,7 @@ const ProductTable = () => {
     const renderTitle = () => {
         return (
             <Flex justify="space-between">
-                <h1 className={cx('title')}>{products.length + (products.length > 1 ? " Products" : " Product")} </h1>
+                <h1 className={cx('title')}>3 Products</h1>
                 {!hasSelected ? (
                     <Flex>
                         <Button
@@ -210,7 +197,6 @@ const ProductTable = () => {
             </Flex>
         );
     };
-
     const tabs = [
         {
             key: 'all',
@@ -227,7 +213,7 @@ const ProductTable = () => {
     ];
 
     const handleTab = (tab) => {
-        setActiveTab(tab)
+        console.log(tab);
     };
 
     return (
@@ -236,17 +222,15 @@ const ProductTable = () => {
             <Table
                 columns={columns}
                 expandable={{
-                    expandedRowRender: (record) => expandedRowRender(record),
+                    expandedRowRender,
                     defaultExpandedRowKeys: ['0'],
                 }}
-                dataSource={products}
+                dataSource={data}
                 size="middle"
                 title={renderTitle}
                 rowSelection={rowSelection}
                 bordered
-                rowKey="id"
-                pagination={{ pageSize: 1 }}
-                />
+            />
         </Content>
     );
 };

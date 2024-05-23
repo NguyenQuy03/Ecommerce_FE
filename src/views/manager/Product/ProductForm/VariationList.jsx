@@ -1,5 +1,4 @@
 import { Card, Col, Flex, Form, Input } from 'antd';
-import { useState } from 'react';
 import { Trash3, XLg } from 'react-bootstrap-icons';
 
 import Button from '~/components/Button';
@@ -10,9 +9,6 @@ const layout = {
 };
 
 const VariationList = ({ variations, onVariationsChange: setVariations }) => {
-    const [variationNameDuplicate, setVariationNameDuplicate] = useState(null);
-    const [variationOptionDuplicate, setVariationOptionDuplicate] = useState(null);
-
     const handleAddVariation = () => {
         setVariations([...variations, { name: '', options: [''] }]);
     };
@@ -22,8 +18,7 @@ const VariationList = ({ variations, onVariationsChange: setVariations }) => {
         setVariations(updatedVariations);
     };
 
-    const handleAddOption = (e, variationIndex) => {
-        e.preventDefault();
+    const handleAddOption = (variationIndex) => {
         const updatedVariations = [...variations];
         updatedVariations[variationIndex].options.push('');
         setVariations(updatedVariations);
@@ -37,46 +32,12 @@ const VariationList = ({ variations, onVariationsChange: setVariations }) => {
         setVariations(updatedVariations);
     };
 
-    const handleVariationName = (e, variationIndex) => {
-        const inputValue = e.target.value;
-        const existingNames = new Set();
-
-        for (const item of variations) {
-            existingNames.add(item.name);
-        }
-
-        if (existingNames.has(inputValue)) {
-            setVariationNameDuplicate('Names of variations should be different.');
-        } else {
-            setVariationNameDuplicate(null);
-        }
-
-        const updatedVariations = [...variations];
-        updatedVariations[variationIndex].name = inputValue;
-        setVariations(updatedVariations);
-    };
-
-    const handleVariationValue = (e, variationIndex, optionIndex) => {
-        const inputValue = e.target.value;
-        const existingOptions = new Set(variations[variationIndex].options);
-
-        if (existingOptions.has(inputValue)) {
-            setVariationOptionDuplicate('Options of variations should be different.');
-        } else {
-            setVariationOptionDuplicate(null);
-        }
-
-        const updatedVariations = [...variations];
-        updatedVariations[variationIndex].options[optionIndex] = inputValue;
-        setVariations(updatedVariations);
-    };
-
     return (
         <Form.Item label="Variations">
             <div>
                 {variations.map((variation, variationIndex) => (
                     <Card
-                        title={`${variation.name}` || `Variation ${variationIndex + 1}`}
+                        title={`Variation ${variation.name}`}
                         key={variationIndex}
                         extra={
                             <Button
@@ -86,21 +47,20 @@ const VariationList = ({ variations, onVariationsChange: setVariations }) => {
                                 onClick={() => handleRemoveVariation(variationIndex)}
                             ></Button>
                         }
-                        size="small"
+                        size='small'
                         style={{ marginBottom: '20px' }}
                     >
-                        <Form.Item
-                            label="Name"
-                            {...layout}
-                            validateStatus={variationNameDuplicate ? 'error' : ''}
-                            help={variationNameDuplicate}
-                        >
+                        <Form.Item label="Name" {...layout}>
                             <Col span={12}>
                                 <Flex style={{ marginRight: '8px' }}>
                                     <Input
                                         type="text"
                                         value={variation.name}
-                                        onChange={(e) => handleVariationName(e, variationIndex)}
+                                        onChange={(e) => {
+                                            const updatedVariations = [...variations];
+                                            updatedVariations[variationIndex].name = e.target.value;
+                                            setVariations(updatedVariations);
+                                        }}
                                         placeholder="eg:colour, etc"
                                     />
                                     <Button type={'default'} size={'small'} disabled></Button>
@@ -108,12 +68,7 @@ const VariationList = ({ variations, onVariationsChange: setVariations }) => {
                             </Col>
                         </Form.Item>
 
-                        <Form.Item
-                            label="Options"
-                            {...layout}
-                            validateStatus={variationOptionDuplicate ? 'error' : ''}
-                            help={variationOptionDuplicate}
-                        >
+                        <Form.Item label="Options" {...layout}>
                             <Flex wrap="wrap">
                                 {variation.options.map((option, optionIndex) => (
                                     <Col span={12} key={optionIndex}>
@@ -121,7 +76,12 @@ const VariationList = ({ variations, onVariationsChange: setVariations }) => {
                                             <Input
                                                 type="text"
                                                 value={option}
-                                                onChange={(e) => handleVariationValue(e, variationIndex, optionIndex)}
+                                                onChange={(e) => {
+                                                    const updatedVariations = [...variations];
+                                                    updatedVariations[variationIndex].options[optionIndex] =
+                                                        e.target.value;
+                                                    setVariations(updatedVariations);
+                                                }}
                                                 placeholder="eg:Red, etc"
                                             />
                                             <Button
@@ -137,7 +97,7 @@ const VariationList = ({ variations, onVariationsChange: setVariations }) => {
                         </Form.Item>
 
                         <Form.Item label=" " {...layout}>
-                            <Button type={'outline'} onClick={(e) => handleAddOption(e, variationIndex)}>
+                            <Button type={'outline'} onClick={() => handleAddOption(variationIndex)}>
                                 Add Option
                             </Button>
                         </Form.Item>

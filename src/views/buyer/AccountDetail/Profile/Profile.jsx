@@ -1,7 +1,8 @@
-import { Col, Divider, Form, Radio, Row, Select } from 'antd';
+import { Col, Divider, Form, Radio, Row } from 'antd';
 import { useEffect, useState } from 'react';
 import { WrapperContent } from '~/components/Wrapper';
 
+import { Select } from 'antd';
 import Button from '~/components/Button';
 
 const { Option } = Select;
